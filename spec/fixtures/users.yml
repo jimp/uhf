@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+admin:
+  id: 1
+  role_id: 1
+  login: admin
+  email: admin@admin.com
+user:
+  id: 2
+  role_id: 2
+  login: user
+  email: user@user.com
+moderator:
+  id: 3
+  role_id: 3
+  login: moderator
+  email: moderator@moderator.com

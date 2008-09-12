@@ -1,0 +1,63 @@
+<!-- begin left column -->
+<div class="column wide">
+  <%= render :partial => '/navigation/breadcrumbs' unless print? %>
+  <div>
+    
+    <%= render :partial=>'/content_blocks/block', 
+    :object => ContentBlock.find_or_create_by_blockable_type_and_blockable_id_and_group('PhysicalPage',1,'featured-story'),
+    :locals => {:return_url => request.request_uri} %>
+        
+    <hr/>
+    <%- unless @skip_stories %>
+    <%- for story in @pages -%>
+      <%- div_for story do -%>
+        <h3><%= story.link_text %></h3>
+        <div>
+          <%= story.title %>
+          <%= link_to "Continued...", story.url %>
+        </div>
+      <%- end -%>
+    <%- end -%>
+    <%- end -%>
+    
+  </div>
+</div>
+<!-- end left column -->
+
+<%- unless print? -%>
+<div class="columnspacer"></div>
+
+<!-- begin right column -->
+<div class="column narrow">
+  <div class="rightitem">
+    <%= render :partial => "/shared/search" %>
+  </div>
+
+  <div class="stripeupbox pageoptionscontainer">
+    <select name="inpPageSelect" id="inpPageSelect">
+      <option value="page">This Page</option>
+    </select>
+    <div class="pageoptionsbtn button">
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><%= link_to 'Print', '/stories?print=true', :onclick => "window.open(this.href);return false;" %></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><%= link_to("Email", "/email?u=/stories") %></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><a href="<%= request.path %>" onclick="addBookmark(this);return false;">Save</a></span>
+      <span class="btnBlueSmRight last"></span>
+    </div>
+  </div>
+
+  <div class="rightitem">
+    <%= render :partial => "/shared/text_size" %>
+  </div>
+
+  <%= render :partial => '/shared/category_sidebar', :locals => {:title => "Find Stories", :action => "/stories"} %>
+
+</div>
+<!-- end right column -->
+<%- end -%>
+
+

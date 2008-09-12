@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  name: Home
+  description: MyString
+  directory: templates
+  thumbnail: MyString
+  position: 1
+  created_at: 2007-08-27 12:42:39
+  updated_at: 2007-08-27 12:42:39
+two:
+  id: 2
+  name: Internal Page
+  directory: templates
+  description: MyString
+  thumbnail: MyString
+  position: 1
+  created_at: 2007-08-27 12:42:39
+  updated_at: 2007-08-27 12:42:39

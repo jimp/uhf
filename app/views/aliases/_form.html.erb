@@ -1,0 +1,17 @@
+<%= error_messages_for :alias %>
+
+<% form_for(@alias) do |f| %>
+<p>
+  <label for="alias_name">This Path:</label><br/>
+  <%= f.text_field :name %>
+</p>
+<p>
+  <label for="alias_page_id">Should Point to This Page</label><br/>
+  <%= f.collection_select :page_id, Page.find(:all, :order=>'path'), :id, :url %>
+</p>
+<p>
+  <%= f.submit "Save" %>
+</p>
+<% end %>
+
+<%= link_to 'Cancel and Go Back', aliases_path %>

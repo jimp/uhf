@@ -1,0 +1,27 @@
+
+
+<div id="NavFormWrapperTop">
+  <div id="NavFormWrapperBottom">
+    <form action="providers_item" name="navform" method="get" id="NavForm">
+	    <label>I'm caring for someone in a…</label>
+	    <%= render :partial => 'site_specific/providers_from' %>
+	    
+	    <label>moving to...</label>
+	      <div id="to_place_id">
+    	    <%= render :partial => 'site_specific/moving_to' %>
+    	  </div>
+
+          <%= render :partial=>'site_specific/moving_button' %>
+
+    </form>
+  </div>
+</div>
+
+<%= observe_field("fromplace",
+        :update => "to_place_id",
+        :url => 'pages/moving_to_dropdown',
+        :with => "'id='+value",
+        :on => "changed")
+%>
+
+<%= render :partial=>'site_specific/content'%>

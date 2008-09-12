@@ -1,0 +1,45 @@
+<%- content_for :toolbar do -%>
+<%= will_paginate @users %>
+<p><%= link_to 'New User', new_user_path %></p>
+<%- end -%>
+<h2>Listing Users</h2>
+
+<% unless @users.size==0 %>
+<%= yield :toolbar %>
+<table class="cms">
+  <col style="width:350px;"/>
+  <col style="width:100px;"/>
+  <col/>
+  <col/>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Role</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for user in @users %>
+    <tr>
+      <td onclick="document.location = '<%= edit_user_path(user) %>'" style="cursor:pointer;">
+        <%= user.login %>
+      </td>
+      <td onclick="document.location = '<%= edit_user_path(user) %>'" style="cursor:pointer;">
+        <%= user.role.name %>
+      </td>
+      <td class="link">
+        <%= link_to 'Edit', edit_user_path(user) %>
+      </td>
+      <td class="link">
+        <%= link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+There are currently no users in the system.
+<% end %>
+
+<%= yield :toolbar %>

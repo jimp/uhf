@@ -1,0 +1,9 @@
+
+<% menu = Page.find_by_path 'moving_from_caregivers_menu' %>
+  
+<select name="fromplace" id="fromplace">
+  <option value="-1">Select ...</option>
+  <% menu.children.each do |item| %>
+    <option value="<%= item.id %>"><%= item.path %></option>
+  <% end %>
+</select>

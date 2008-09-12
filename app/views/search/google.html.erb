@@ -1,0 +1,39 @@
+<%- 
+  @body_id = 'google_search'
+-%>
+
+<h1>Search NORC Blueprint Website:</h1>
+<form action="/search" id="search_top">
+  <input type="text" name="q" value="<%= params[:q] %>" class="inputtext" /><input type="image" class="inputimage" src="/images/button_go.gif" />
+</form>
+
+<br style="clear:both;">
+
+<%- if @search -%>
+<%- if @search.results.length > 0 -%>
+  <p>Viewing <%= @search.first_result %>-<%= @search.last_result %> of <%= pluralize(@search.total_results,'result') %> for '<%= @search.query %>'</p>
+
+  <%- content_for :pagination do -%>
+    <p>
+      <%= google_pagination_links(@search) %>
+    </p>
+  <%- end -%>
+
+  <%= yield :pagination %>
+  
+  <div id="search_results">
+  <%- for result in @search.results -%>
+    <div>
+      <p class="title"><%= link_to mime_type_for(result)+result.title, result.url %></p>
+      <p class="snippet"><%= result.snippet %></p>
+      <p class="url"><%= format_url(result.url) %></p>      
+    </div>
+  <%- end -%>
+  </div>
+
+  <%= yield :pagination %>
+
+<%- else -%>
+<p>No results matched your query.</p>
+<%- end -%>  
+<%- end -%>

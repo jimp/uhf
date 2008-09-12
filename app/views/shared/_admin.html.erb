@@ -1,0 +1,7 @@
+<div id="admin">
+  <div class="gutter">
+    <%= content_tag :div, flash[:notice], :id=>'flash' if flash[:notice] %>
+    <%- flash.clear -%>
+    <%= yield %>
+  </div>
+</div>

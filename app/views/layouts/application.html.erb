@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>UHF Next Step in Care | <%= @title.blank? ? '' : " :: #{@title}" %></title>
+  <%# @title=Home  BUGBUG this needs to be implemented %>
+
+  <%= javascript_include_tag 'prototype' %>
+  <%= javascript_include_tag 'scriptaculous' %>
+  <%= javascript_include_tag 'application' %>
+  <%# javascript_include_tag 'javascript' %>
+
+  <%- if admin? -%>
+  <%= stylesheet_link_tag 'admin', :media => 'all' %>
+  <%= stylesheet_link_tag 'modalbox', :media => 'all' %>
+  <%= javascript_include_tag 'modalbox' %>
+  <%= javascript_include_tag 'fckeditor/fckeditor' %>
+  <%- end -%>
+
+  <%= stylesheet_link_tag 'base.css' %>
+  <%# stylesheet_link_tag 'screen' %>
+  <%# stylesheet_link_tag 'normal', :title=>'Normal Text Size' %>
+  <%# stylesheet_link_tag 'medium', :title=>'Larger Text Size' %>
+  <%# stylesheet_link_tag 'large', :title=>'Largest Text Size' %>
+  <%# stylesheet_link_tag 'lightbox' %>
+  <!--[if IE]>
+    <%= stylesheet_link_tag 'ie' %>
+  <![endif]-->
+
+  <!--[if lt IE 7]>
+    <%= stylesheet_link_tag 'ie6' %>
+    <%= javascript_include_tag 'js_styleswitcher', :defer=>'' %>
+  <![endif]-->
+  
+  <%= javascript_include_tag 'js_styleswitcher' %>
+  <%= javascript_include_tag 'textsize' %>
+  <%= javascript_include_tag 'AC_RunActiveContent' %>
+  <%= javascript_include_tag 'swfobject' %>
+  <%# javascript_include_tag 'lightbox' %>
+  <%= javascript_include_tag 'javascript' %>
+  
+  <%# auto_discovery_link_tag(type = :atom, '/blog.atom', {:title=>"#{app_name} Blog"}) %> <%# uncomment that block if they are going to use the blog  %>
+  <%= yield :head %>
+</head>
+<body id="<%=  @body_id || app_path.gsub('/','_') || 'Home'  %>" <%= yield :body_attributes %>>
+
+<div id="Wrapper">
+    <h2 id="Masthead">Next Step in Care: Family Caregivers &amp; Health Care Professionals Working Together</h2>
+
+  <%# The left sidebar %>
+  <%= render :partial => 'site_specific/sidebar' %>
+
+	<%= yield %>
+
+  <%= render :partial => 'site_specific/site_info' %>
+
+  <%= render :partial=>'shared/dock' if admin? %>
+</div>  
+  
+</body>
+</html>
+

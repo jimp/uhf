@@ -1,0 +1,23 @@
+<p>
+  <b>Name:</b>
+  <%=h @partial.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @partial.description %>
+</p>
+
+<p>
+  <b>Thumbnail:</b>
+  <%=h @partial.thumbnail %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%=h @partial.position %>
+</p>
+
+
+<%= link_to 'Edit', edit_partial_path(@partial) %> |
+<%= link_to 'Back', partials_path %>

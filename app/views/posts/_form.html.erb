@@ -1,0 +1,32 @@
+<%- content_for :head do -%>
+  <%= javascript_include_tag 'fckeditor/fckeditor' %>
+<%- end -%>
+
+<%= error_messages_for :post %>
+
+<% form_for(@post) do |f| %>
+  <p>
+    <label for="post_title">Title</label><br />
+    <%= f.text_field :title, :style=>'width:98%;' %>
+  </p>
+
+  <div id="<%= fckeditor_div_id(:post, :body) %>">
+    <%= fckeditor_textarea('post', 'body', :toolbarSet=>'Jasper', :height=>300) %> 
+  </div>
+
+  <p>
+    <label for="post_comments_expire_at">Comments Expire At</label><br />
+     <%= f.date_select :comments_expire_at, :include_blank=>true %><br/>
+     <small>Set this for a date in the past if you want to disable comments for this post</small>
+  </p>
+
+  <p>
+    <%= f.check_box :publish, :checked=>@publish %> <label class="inline" for="post_publish">Publish (if you uncheck this, it will remove the post)</label>
+  </p>
+
+  <p>
+    <%= f.submit "Save", :class=>'save' %>
+  </p>
+<% end %>
+
+<%= link_to 'Cancel and Go Back', posts_path %>

@@ -1,0 +1,14 @@
+<%- begin -%>
+  <%- if @page && @page.show_children -%>
+    <%- pages = @page.children -%>
+    <%- if pages.length > 0 -%>
+    <h3>More <%= @page.link_text %></h3>
+    <ul id="page_children">
+      <li><%= link_to_unless_current @page.link_text, @page.url %></li>
+      <%- for page in pages -%>
+        <li><%= link_to_unless_current page.link_text, page.url %></li>
+      <%- end -%>
+    </ul>
+    <%- end -%>
+  <%- end -%>
+<%- rescue;end -%>

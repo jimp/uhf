@@ -1,0 +1,50 @@
+<!-- begin left column -->
+<div class="column wide">
+  <div class="history">
+    <%= link_to "Home", "/" %>
+    &raquo; 
+    <%= link_to "Toolbox", "/toolbox" %>
+    &raquo;
+    <%= link_to "Search Results", "#" %>
+  </div>
+
+  <h1>Search Tools by Category</h1>
+
+  <%- if @pages.length > 0 -%>
+  <p>The following <%= pluralize(@pages.length,"tool") %> matched your search criteria:</p>
+  <div>
+    <%- for page in @pages -%>
+    <div class="search_result">
+      <p class="title"><%= link_to page.link_text, page.url %></p>
+      <div class="snippet"><%= page.title %></div>
+      <p class="link"><%= truncate(app_url + page.url.gsub(/^\//,''),60)  %></p>
+    </div>
+    <%- end -%>    
+  </div>
+  <%- else -%>
+  <p>No tools matched your criteria</p>
+  <%- end -%>
+
+</div>
+<!-- end left column -->
+
+<%- unless print? -%>
+<div class="columnspacer"></div>
+
+<!-- begin right column -->
+<div class="column narrow">
+  <div class="rightitem">
+    <%= render :partial => "/shared/search" %>
+  </div>
+
+  <div class="rightitem">
+    <%= render :partial => "/shared/text_size" %>
+  </div>
+
+  <%= render :partial => '/shared/category_sidebar', :locals => {:title => "Find Tools", :action => "/toolbox"} %>
+
+</div>
+<!-- end right column -->
+<%- end -%>
+
+

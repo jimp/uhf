@@ -1,0 +1,21 @@
+<div id="dock">
+  <p>
+    <span style="color:#d5d5d5;"><%= "Welcome #{current_user.login.titleize}" %></span> | 
+    <%= link_to 'Logout', logout_url %> |
+    <%= link_to 'Pages', pages_url %> | 
+    <%# link_to 'Aliases', aliases_url %>  
+    <%# link_to 'Category Groups', category_groups_url %> 
+    <%# link_to 'Categories', categories_url %> 
+    <%= link_to 'Users', users_url %> | 
+    <%= link_to 'Signups', signups_url %> 
+    <%# link_to 'Tools', '/pdfs' %> 
+    <%# link_to 'Surveys', '/surveys' %> 
+    <%# link_to 'Guest Book', '/guest_books' %>
+    <%# link_to 'Files', '/assets' %>
+  </p>
+  <p>
+    <%= image_tag 'JasperDesignCMS.gif', :alt=>'Powered by JasperDesign' %>
+  </p>
+</div>
+
+

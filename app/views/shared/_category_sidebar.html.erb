@@ -1,0 +1,78 @@
+<%- 
+title = nil if title.nil?
+checked_boxes = [] if checked_boxes.nil?
+force = false if force.nil?
+action = "/stories" if action.nil? || action.blank?
+list = Category.find_all_by_page_template(@page_template,force)
+-%>
+
+<%- unless list.nil? || list.empty? -%>
+
+<script type="text/javascript" charset="utf-8">
+function toggleCategory(id){
+  Effect.toggle("boxes_"+id,'blind',{duration:0.2});
+  img = $('img_'+id);
+  if(img.src.indexOf('_down') == -1){
+    img.src='/images/btnCircleArrow_down.png';
+  }else{
+    img.src='/images/btnCircleArrow.png';
+  }
+}
+</script>
+
+<div class="rightitem">
+
+
+  <form action="<%= action %>" id="category_search">
+  <ul class="sidebar">
+    <li>
+      <%= content_tag :h6, title unless title.blank? %>
+
+      <ul class="sublist stories">
+        <%- list.each do |group, categories| -%>
+        <li<%= cycle("",%Q{ class="solid"}) %>>
+        
+        
+        <%= link_to_function image_tag("btnCircleArrow.png", :size => "15x15", :alt => "show/hide categories", :id => "img_#{group.id}"), "toggleCategory('#{group.id}')" %>
+        <%= link_to_function group.name, "toggleCategory('#{group.id}')" %>
+        <div id="boxes_<%= group.id %>" style="display:none;"><%# these should expand on the new page screen %>
+          <%- for category in categories.sort_by(&:position) -%>
+          <div class="checkboxes">
+            <%= check_box_tag "category[][id]", category.id, checked_boxes.include?(category.id.to_s), :id => "category_#{category.id}" %>
+            <label for="category_<%= category.id %>"><%= category.name %></label>
+          </div>
+          <%- end -%>
+        </div>
+      </li>  
+
+      <%- end -%>
+
+
+
+	  <% if title == 'Find Stories'	%>
+      	<li<%= cycle("",%Q{ class="solid"}) %>>
+        	<a href="/stories/all">List All Stories</a>        
+      	</li>
+	  <% elsif title == 'Find Tools' %>
+      	<li<%= cycle("",%Q{ class="solid"}) %>>
+        	<a href="/tools/all">List All Tools</a>    
+      	</li>
+
+      <%- end -%>
+      </ul>  
+
+    </li>
+    <li class="padded2">
+      <div class="button goalignright">
+        <span class="btnBlueSmLeft"></span>
+        <span class="btnBlueSmMiddle"><a href="<%= action %>?nosearch" onclick="$('category_search').submit();return false;">Go »</a></span>        
+        <span class="btnBlueSmRight last"></span>
+      </div>
+      <div class="clear"></div>
+    </li>
+  </ul>
+  </form>
+</div>
+<%- end -%>
+
+

@@ -1,0 +1,62 @@
+<%- content_for :toolbar do -%>
+<%= will_paginate(@messages) %>
+<%- end -%>
+<h2>Listing Messages</h2>
+
+<% unless @messages.size==0 %>
+<%= yield :toolbar %>
+<table class="cms">
+  <col style="width:400px;"/>
+  <col style="width:50px;"/>
+  <col/>
+  <col/>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>To</th>
+      <th>Subject</th>
+      <th>Date</th>
+      <th>Sent?</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for message in @messages %>
+    <tr>
+      <td onclick="document.location = '<%= message_path(message) %>'" style="cursor:pointer;">
+        <%= message.from %>
+      </td>
+      <td onclick="document.location = '<%= message_path(message) %>'" style="cursor:pointer;">
+        <%= message.recipients %>
+      </td>
+      <td onclick="document.location = '<%= message_path(message) %>'" style="cursor:pointer;">
+        <%= message.subject %>
+      </td>
+      <td onclick="document.location = '<%= message_path(message) %>'" style="cursor:pointer;text-align:center;">
+        <%= message.created_at.to_s(:app_short) %>
+      </td>
+      <td onclick="document.location = '<%= message_path(message) %>'" style="cursor:pointer;text-align:center;">
+        <%= image_tag 'icons/tick.png' if message.sent_on? %>
+      </td>
+      <td class="link">
+        <%= link_to 'Show', message_path(message) %>
+      </td>
+      <td class="link">
+        <%= link_to 'Delete', message, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+There are currently no messages in the system.
+<% end %>
+
+<%= yield :toolbar %>
+
+<h2>What are messages?</h2>
+<p>
+  Messages are the contents of the forms that people fill in on the site and submit. In addition to emailing the submitted form to you, the site also stores them in case you want to
+  analyze the data later, or you think the site emails are being redirected to the wrong place or marked as spam in your inbox.
+</p>

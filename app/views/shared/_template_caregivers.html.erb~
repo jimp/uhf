@@ -1,0 +1,49 @@
+
+<div id="NavFormWrapperTop">
+  <div id="NavFormWrapperBottom">
+    <form action="caregivers_item" name="navform" method="get" id="NavForm">
+	    <label>I'm caring for someone in a…</label>
+	    <%= render :partial => 'site_specific/caregiver_from' %>
+	    
+	    <label>moving to...</label>
+	      <div id="to_place_id">
+    	    <%= render :partial => 'site_specific/moving_to' %>
+    	  </div>
+
+          <%= render :partial=>'site_specific/moving_button' %>
+
+    </form>
+  </div>
+</div>
+
+<%= observe_field("fromplace",
+        :update => "to_place_id",
+        :url => 'pages/moving_to_dropdown',
+        :with => "'id='+value",
+        :on => "changed")
+%>
+
+<div id="Content">
+		<%= render :partial=>'content_blocks/container', :object=>@page, :locals=>{:group=>'header'} %>
+<%#
+	<h1> Moving From a Hospital to a Home Care Setting</h1>
+	<h3>About the Transition</h3>
+%>
+	<div id="SubNav">
+	  
+	  <%= render :partial=>'site_specific/print_email_save'%>
+
+    <h3>
+  		<%= render :partial=>'content_blocks/container', :object=>@page, :locals=>{:group=>'right_title'} %>
+    </h3>
+    <ul>
+      <%= render :partial=>'content_blocks/li_container', :object=>@page, :locals=>{:group=>'right_item'} %>
+    </ul>
+	  
+		<div id="NextPage"><a href= "<%= "/#{@other_perspective}" %>" >Health Care Provider Perspective</a></div>
+	  </div>
+	<div id="PrimaryContent">
+		<%= render :partial=>'content_blocks/container', :object=>@page, :locals=>{:group=>'right_menu'} %>
+	</div>
+		
+</div>

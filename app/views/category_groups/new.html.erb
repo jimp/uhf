@@ -1,0 +1,21 @@
+<h2>New Category Group</h2>
+
+<%= error_messages_for :category_group %>
+
+<% form_for(@category_group) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Position</b><br />
+    <%= f.text_field :position %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', category_groups_path %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  blockable_id: 1
+  blockable_type: Page
+  group: main
+  text: "Block One"
+  position: 0
+two:
+  id: 2
+  blockable_id: 1
+  blockable_type: Page
+  group: main
+  text: Block Two
+  position: 0

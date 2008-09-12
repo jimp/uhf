@@ -1,0 +1,13 @@
+/var/www/apps/<%= application %>/<%= rails_env %>/shared/log/*.log {
+  daily
+  missingok
+  compress
+  sharedscripts
+  olddir old
+  rotate 5
+  postrotate
+  for i in `ls ls /var/run/mongrel_cluster/<%= application %>_<%= rails_env %>.*.pid`; do
+   kill -USR2 `cat $i`
+  done
+ endscript
+}

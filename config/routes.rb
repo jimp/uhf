@@ -1,0 +1,115 @@
+ActionController::Routing::Routes.draw do |map|
+  map.resources :pdfs
+  map.resources :signups
+
+  # map.resources :guest_books
+
+  # map.resources :survey_questions
+
+  # map.resources :survey_responses
+
+  # map.resources :survey_options
+
+  # map.resources :surveys
+
+  map.resources :partials
+
+  map.resources :categories
+
+  map.resources :category_groups
+
+  map.resources :page_partials
+
+  map.home '', :controller => 'pages', :action => 'show'
+
+  map.search '/search', :controller=>'search'
+
+  map.with_options :controller=>'sessions' do |session|
+    session.login '/login', :action=>'new'
+    session.logout '/logout', :action=>'destroy'
+  end
+
+  map.with_options :controller=>'blog', :action=>'index', :requirements => {:year => /\d{4}/, :day => /\d{1,2}/, :month => /\d{1,2}/} do |blog|
+    blog.blog 'blog', :year => nil, :month=>nil, :day=>nil
+    blog.blog_year 'blog/:year', :month=>nil, :day=>nil
+    blog.blog_month 'blog/:year/:month', :day=>nil
+    blog.blog_day 'blog/:year/:month/:day'
+    blog.blog_post 'blog/:year/:month/:day/:id'
+    blog.with_options :format=>'atom' do |atom|
+      atom.atom_blog 'blog.atom', :year => nil, :month=>nil, :day=>nil
+      atom.atom_blog_year 'blog/:year.atom', :month=>nil, :day=>nil
+      atom.atom_blog_month 'blog/:year/:month.atom', :day=>nil
+      atom.atom_blog_day 'blog/:year/:month/:day.atom'
+      atom.atom_blog_post 'blog/:year/:month/:day/:id.atom'
+    end
+  end
+  
+  map.with_options :controller=>'comments', :action=>'index' do |comment|
+    comment.spam_comments '/comments/spam', :filter=>'spam'
+    comment.unapproved_comments '/comments/unapproved', :filter=>'unapproved'
+  end
+
+  map.connect 'fckeditor/check_spelling', :controller => 'fckeditor', :action => 'check_spelling'
+  map.connect 'fckeditor/command', :controller => 'fckeditor', :action => 'command'
+  map.connect 'fckeditor/upload', :controller => 'fckeditor', :action => 'upload'
+
+  map.resources :aliases
+  map.resources :paths
+  map.resources :messages
+  map.resources :comments, :member=>{:ham=>:post, :spam=>:post, :approve=>:post, :disapprove=>:post}
+  map.resources :posts, :has_many=>:comments, :collection=>{:search=>:get}
+  map.resources :account
+  map.resources :users
+  map.resources :roles
+  map.resources :events
+  map.connect '/assets/show/:id', :controller=>'assets', :action=>'show'
+  map.connect '/tool/:id', :controller=>'pdfs', :action=>'show'
+
+  map.connect 'caregivers_item', :controller=>'pages', :action=>'caregivers_item'
+  map.connect 'providers_item', :controller=>'pages', :action=>'providers_item'
+  map.connect 'moving_selected', :controller=>'pages', :action=>'moving_selected'
+  map.connect 'pages/moving_to_dropdown/:id', :controller=>'pages', :action=>'moving_to_dropdown'
+  map.connect 'pages/moving_button/:id'  , :controller=>'pages', :action=>'moving_button'
+
+  # TODO: do the same for comments
+  #map.connect '/:blockable_type/:blockable_id/:group/content_blocks', :controller=>:content_blocks, :action=>:update
+  map.resources :content_blocks, :path_prefix=>':blockable_type/:blockable_id/:group'
+  map.resources :pages, :collection=>{:list=>:get, :search=>:get, :tree=>:get}, :member=>{:view=>:get, :add_child=>:get, :move_left=>:post, :move_right=>:post}
+  map.resources :sessions
+  map.connect '/assets/delete', :controller=>'assets', :action=>'delete'
+  map.resources :assets
+  
+  map.feedback '/site_mailer/email_sent', :controller => 'site_mailer', :action => 'email_sent' 
+  map.feedback '/site_mailer/email_failed', :controller => 'site_mailer', :action => 'email_failed' 
+  map.feedback '/site_mailer/create_email', :controller => 'site_mailer', :action => 'create_email' 
+  # map.feedback '/guestbook2', :controller => 'site_mailer', :action => 'mail_form', :mode => 'guestbook'
+  # map.feedback '/guestbook', :controller => 'guest_books', :action => 'new'
+  # guest_books/new
+  # map.feedback '/survey', :controller => 'surveys', :action => 'thoughts'   
+  map.feedback '/ajax/popup', :controller => 'ajax', :action => 'popup'
+  # map.feedback '/survey_responses/gp_survey', :controller => 'survey_responses', :action => 'gp_survey'
+  # map.feedback '/survey_responses/story_survey', :controller => 'survey_responses', :action => 'story_survey'
+  # map.feedback '/survey_responses/tool_survey', :controller => 'survey_responses', :action => 'tool_survey'
+  # map.feedback '/stories/all', :controller => 'pages', :action => 'stories_all'
+  # map.feedback '/tools/all', :controller => 'pages', :action => 'tools_all'
+
+
+
+  # This is the routes that enables the "email this page functionality" - 
+  # since it's a form, it needs a separate page unlike the print and save functionality
+  map.connect '/email', :controller => "pages", :action => "email"
+
+  # Manually create the sitemap page
+  map.connect '/sitemap', :controller => "pages", :action => "sitemap"
+
+  # Manually create the stories page, since it's going to be an index of the others anyway
+  # map.connect '/stories', :controller => "pages", :action => "stories"
+  # map.connect '/toolbox', :controller => "pages", :action => "toolbox"
+
+  map.connect ':controller/service.wsdl', :action => 'wsdl'
+  map.connect '*path', :controller => 'pages', :action => 'show'
+
+  # Install the default route as the lowest priority.
+  # map.connect ':controller/:action/:id.:format'
+  # map.connect ':controller/:action/:id'
+end

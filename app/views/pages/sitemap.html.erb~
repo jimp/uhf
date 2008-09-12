@@ -1,0 +1,26 @@
+<%- 
+  @body_id = "sitemap"
+-%>
+
+<!-- begin left column -->
+<div class="column wide">
+  <div>
+    <h2>Sitemap</h2>
+    <%= render :partial=>'/navigation/sitemap', :object=>@pages, :locals=>{:ul_id=>'sitemap-nav', :max_depth=>1} %>
+  </div>
+</div>
+<!-- end left column -->
+
+<div class="columnspacer"></div>
+<!-- begin right column -->
+<div class="column narrow">
+  <div class="rightitem">
+    <%= render :partial => "/shared/search" %>
+  </div>
+
+  <div class="rightitem">
+    <%# render :partial => "/shared/text_size" %>
+  </div>		
+
+</div>
+<!-- end right column -->  

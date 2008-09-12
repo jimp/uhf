@@ -1,0 +1,16 @@
+<div id="Content">
+  <h1>New Pdf</h1>
+
+  <%= error_messages_for :pdfs %>
+
+  <table>
+  <% form_for(@pdfs, :url => pdfs_path, :html=>{:multipart=>true}) do |f| %>
+    <tr><td><%= f.file_field :uploaded_data %></td></tr>
+    <tr><td><%= f.select 'page', [['Caregivers',1],['Providers',2]] %>
+      <tr><td><%= f.select 'language', [['English',1]] %>
+    <tr><td align="center">
+      <%= f.submit "Add" %>
+    </td></tr>
+  <% end %>
+  </table>
+</div>

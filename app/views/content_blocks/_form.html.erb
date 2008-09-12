@@ -1,0 +1,17 @@
+<%- 
+  block = @content_block
+  url_hash = {:blockable_type=>block.blockable_type.tableize, :blockable_id=>block.blockable_id, :group=>block.group, :id=>block.id} 
+  url_hash[:return_url]=return_url if defined?(return_url)
+-%>
+
+<p><label for="content_block_text">Type Your Text Here:</label></p>
+<p>&nbsp;</p>
+<div id="<%= fckeditor_div_id(:content_block, :text) %>">
+  <%= fckeditor_textarea('content_block', 'text', :toolbarSet=>'Jasper', :height=>300) %> 
+</div>
+<p>
+  <%= submit_tag 'Save' %> 
+  <%= link_to("Delete", content_block_url(url_hash), :method=>:delete, :confirm=>'Are you sure?') unless @content_block.new_record? %>
+  <%= link_to "Back", @redirect %>
+</p>
+<%= hidden_field_tag :return_url, params[:return_url] if params[:return_url] %>

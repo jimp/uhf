@@ -1,0 +1,71 @@
+<%- content_for :toolbar do -%>
+<%= will_paginate(@comments) %>
+<p>
+<%= link_to_unless_current "View All Comments (#{Comment.count})", comments_url %> | 
+<%= link_to_unless_current "View Comments Marked as Spam (#{Comment.spam_list.size})", spam_comments_url %> | 
+<%= link_to_unless_current "View Unapproved Comments (#{Comment.unapproved.size})", unapproved_comments_url %>
+</p>
+<%- end -%>
+<h2>Listing Blog Comments</h2>
+
+<%= yield :toolbar %>
+<% unless @comments.size==0 %>
+<table class="cms">
+  <col style="width:200px;"/>
+  <col style="width:100px;"/>
+  <col style="width:20px;"/>
+  <col/>
+  <col/>
+  <col/>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Approved</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for comment in @comments %>
+    <tr>
+      <td onclick="document.location = '<%= comment_path(comment) %>'" style="cursor:pointer;">
+        <%= comment.name %>
+      </td>
+      <td onclick="document.location = '<%= comment_path(comment) %>'" style="cursor:pointer;">
+        <%= comment.created_at.to_s(:app_default) %>
+      </td>
+      <td onclick="document.location = '<%= comment_path(comment) %>'" style="cursor:pointer;text-align:center;">
+        <%= image_tag 'icons/tick.png' if comment.approved_at? %>
+      </td>
+      <td class="link"  style="width:90px;">
+        <%- if comment.approved_at? -%>
+        <%= link_to 'Disapprove', disapprove_comment_path(comment), :confirm => 'Are you sure?', :method=>:post %>
+        <%- else -%>
+        <%= link_to 'Approve', approve_comment_path(comment), :confirm => 'Are you sure?', :method=>:post %>
+        <%- end -%>
+      </td>
+      <td class="link"  style="width:90px;">
+        <%- if comment.spam==true -%>
+        <%= link_to 'Not Spam', ham_comment_path(comment), :confirm => 'Are you sure?', :method=>:post  %>
+        <%- else -%>
+        <%= link_to 'Spam', spam_comment_path(comment), :confirm => 'Are you sure?', :method=>:post  %>
+        <%- end -%>
+      </td>
+      <td class="link"  style="width:70px;">
+        <%= link_to 'Delete', comment, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+There are currently no comments in the system.
+<% end %>
+
+<%= yield :toolbar %>
+
+<p style="margin-top:2em;">
+  <em>Spam Filtering Provided By <%= link_to image_tag('akismet-nigel.png'), 'http://akismet.com/', :target=>'_blank' %></em>
+</p>

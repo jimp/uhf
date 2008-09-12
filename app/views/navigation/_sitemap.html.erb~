@@ -1,0 +1,21 @@
+<%# called like render :partial=>'/navigation/sitemap', :object=>@pages, :locals=>{:ul_id=>'sitemap-nav', :max_depth=>2, :level=>0} %>
+<%- 
+  level = 0 if level.nil?
+  max_depth = 2 if max_depth.nil?
+-%>
+<%- if sitemap.length > 0 -%>
+  <ul id="<%= ul_id %>">
+  <%- for child in sitemap -%>
+    <% unless child.path == 'left_top_menu' || child.path == 'left_bottom_menu' || child.path == 'moving_from_caregivers_menu' || child.path == 'moving_from_providers_menu' %>
+      <%- has_children = child.children.length > 0 -%>
+      <li>
+	<%= link_to(child.link_text, child.url) %> <%= child.path %>
+	<%- if has_children; -%>
+	  <%= render :partial=>'/navigation/sitemap', :object=>child.children, :locals=>{:ul_id=>"list_item_#{child.id}", :max_depth=>max_depth, :level=>level+1} unless level > max_depth %>
+	<%- end -%>
+      </li>
+    <%- end -%>
+  <%- end -%>
+  </ul>
+<%- end -%>
+

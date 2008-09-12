@@ -1,0 +1,96 @@
+
+<div id="NavFormWrapperTop">
+  <div id="NavFormWrapperBottom">
+    <form action="caregivers_item" name="navform" method="get" id="NavForm">
+	    <label>I'm caring for someone in a…</label>
+	    <%= render :partial => 'site_specific/caregiver_from' %>
+	    
+	    <label>moving to...</label>
+	      <div id="to_place_id">
+    	    <%= render :partial => 'site_specific/moving_to' %>
+    	  </div>
+
+          <%= render :partial=>'site_specific/moving_button' %>
+
+    </form>
+  </div>
+</div>
+
+<%= observe_field("fromplace",
+        :update => "to_place_id",
+        :url => 'pages/moving_to_dropdown',
+        :with => "'id='+value",
+        :on => "changed")
+%>
+
+<div id="Content">
+	<div id="Flash">
+	<script language="javascript">
+		if (AC_FL_RunContent == 0) {
+			alert("This page requires AC_RunActiveContent.js.");
+		} else {
+			AC_FL_RunContent(
+				'codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0',
+				'width', '611',
+				'height', '280',
+				'src', 'blank',
+				'quality', 'high',
+				'pluginspage', 'http://www.macromedia.com/go/getflashplayer',
+				'align', 'middle',
+				'play', 'true',
+				'loop', 'true',
+				'scale', 'showall',
+				'wmode', 'transparent',
+				'devicefont', 'false',
+				'id', 'blank',
+				'bgcolor', '#ffffff',
+				'name', 'blank',
+				'menu', 'true',
+				'allowFullScreen', 'false',
+				'allowScriptAccess','sameDomain',
+				'movie', 'blank',
+				'salign', ''
+				); //end AC code
+		}
+	</script>
+	<noscript>
+		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="611" height="280" id="blank" align="middle">
+		<param name="allowScriptAccess" value="sameDomain" />
+		<param name="allowFullScreen" value="false" />
+		<param name="movie" value="blank.swf" /><param name="quality" value="high" /><param name="wmode" value="transparent" /><param name="bgcolor" value="#ffffff" />	<embed src="blank.swf" quality="high" wmode="transparent" bgcolor="#ffffff" width="611" height="280" name="blank" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+		</object>
+	</noscript>
+	</div>
+	<div id="PrimaryContent">
+		<div class="imagewrapper">
+			<img src="images/home_photo.jpg" alt="" />
+			<a href="#">View</a>
+		</div>
+		<p><span>Next Step in Care</span> offers information and advice to help family caregivers and health care providers plan safe and problem-free transitions for patients.</p>
+
+    <%= render :partial=>'content_blocks/container', :object=>@page, :locals=>{:group=>'header'} %>
+
+	</div>
+
+	<div class="contentbox">
+		<img src="images/home_smallphoto1.jpg" alt="" />
+		<h2>Family Caregivers</h2>
+		<p>If you are a relative, friend, partner or other person who is taking care of someone who has a disability of chronic and serious illness, click here for easy-to-use guides and checklists.</p>
+		<a href="caregivers.html" class="contentlink">Learn More</a>
+ 	</div>
+   <%= render :partial=>'content_blocks/container', :object=>@page, :locals=>{:group=>'left_index'} %>
+
+	<div class="contentbox">
+		<img src="images/home_smallphoto2.jpg" alt="" />
+		<h2>Health Care Providers</h2>
+		<p>If you are a health care provider (doctor, nurse, social worker, or therapist), click here for information that can help you and family caregivers.</p>
+		<a href="providers.html" class="contentlink">Learn More</a>
+
+    <%= render :partial=>'content_blocks/container', :object=>@page, :locals=>{:group=>'right_index'} %>
+
+
+	</div>
+	<div class="clear"></div>
+</div>
+
+

@@ -1,0 +1,28 @@
+<%- commentable=form -%>
+<%- if commentable.comments_open? -%>
+<div class="new-comment">
+  <h3>Add your comment</h3>
+  <%= error_messages_for :comment %>
+  <%- form_for [commentable,commentable.comments.build] do |f| -%>
+  <p>
+    <label for="comment_name">Name:</label><br/>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <label for="comment_email">Email:</label><br/>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <label for="comment_website">Website:</label><br/>
+    <%= f.text_field :website %>
+  </p>
+  <p>
+    <label for="comment_body">Message:</label><br/>
+    <%= f.text_area :body, :size=>'40x10' %>
+  </p>
+  <p>
+    <%= submit_tag 'Submit' %>
+  </p>
+  <%- end -%>
+</div>
+<%- end -%>

@@ -1,0 +1,36 @@
+
+<div id="Content">
+
+  <h1>
+    <%= @page.title || '&nbsp;' %>
+  </h1>
+
+  <h3>
+    <%= @page.sub_title || '&nbsp;' %>
+  </h3>
+
+  
+	<div id="SubNav">
+	  
+	<%# skip_right_menu is set by print and save %>
+	<% unless @skip_right_menu %>
+    <%= render :partial=>'site_specific/print_email_save'%>
+	  <% if  @page.template.name == 'template_caregivers' ||   @page.template.name == 'template_providers' %>
+	    <h3><%= @page.menu_title || '&nbsp;' %></h3>
+
+      <ul>
+        <%= render :partial=>'content_blocks/li_container', :object=>@page, :locals=>{:group=>'right_item'} %>
+      </ul>
+	  
+	    <% if @other_perspective %>
+		    <div id="NextPage"><a href= "<%= "/#{@other_perspective}" %>" > <%= @other_persepective_title %></a></div>
+		  <% end %>
+	  <% end %>
+	<% end %>
+	</div>
+	
+	<div id="PrimaryContent">
+		<%= render :partial=>'content_blocks/container', :object=>@page, :locals=>{:group=>'right_menu'} %>
+	</div>
+		
+</div>

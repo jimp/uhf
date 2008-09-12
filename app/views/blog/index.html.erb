@@ -1,0 +1,22 @@
+<%- content_for :head do -%>
+<%- url = "#{request.request_uri.chomp('/')}.atom" -%>  
+<%= auto_discovery_link_tag(type = :atom, url, {:title=>"#{app_name} Blog"}) unless ['/blog.atom','/index.atom','.atom'].include?(url)  %>
+<%- end -%>
+
+<%- if defined?(@posts) -%>
+<%= render :partial=>'post', :collection=>@posts %>
+<%- else -%>
+<%= render :partial=>'post', :locals=>{:show_comments=>true} %>
+<%- end -%>
+
+<%- content_for :sidebar do -%>
+<h3>Archives</h3>
+<%- Post.archives.group_by(&:year).sort.reverse.each do |year, posts| -%>
+<h4><%= year %></h4>
+<ul>
+  <%- for post in posts -%>
+  <li><%= link_to post.month_name, post.archive_url  %></li>
+  <%- end -%>
+</ul>
+<%- end -%>
+<%- end -%>

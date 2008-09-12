@@ -1,0 +1,23 @@
+development:
+  adapter: mysql
+  database: uhf2_development
+  username: root
+  password: s3cr3t
+
+test:
+  adapter: mysql
+  database: uhf_test
+  username: root
+  password: s3cr3t
+
+production:
+  adapter: mysql
+  database: uhf_production
+  username: uhf
+  password: uhf!
+
+staging:
+  adapter: mysql
+  database: uhf_staging
+  username: uhf
+  password: uhf!

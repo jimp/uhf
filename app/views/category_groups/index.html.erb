@@ -1,0 +1,29 @@
+<h2>Listing Category Groups</h2>
+
+<table class="cms">
+  <tr>
+    <th>Name</th>
+    <th>Position</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% for category_group in @category_groups %>
+  <tr>
+    <td><%=h category_group.name %></td>
+    <td><%=h category_group.position %></td>
+    <td><%= link_to 'Edit', edit_category_group_path(category_group) %></td>
+    <td><%= link_to 'Delete', category_group, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Category Group', new_category_group_path %>
+
+<h2>Preview</h2>
+
+<p>This is how the categories will appear on the site:</p>
+
+<%= render :partial => "/shared/category_list", :locals => {:force => true} %>

@@ -1,0 +1,15 @@
+
+
+
+<h1>Listing Files</h1>
+
+<table border="0" cellspacing="5" cellpadding="5">
+  <% @files.each do |file| %>
+    <tr>
+      <td> <%= link_to  file, '/assets/show/1' %></td>
+      <td> <%= link_to 'Delete', :controller=>'assets', :action=>'delete', :id=>file %> </td>
+      
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'New File', new_asset_path() %> 

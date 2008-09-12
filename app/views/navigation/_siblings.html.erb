@@ -1,0 +1,14 @@
+<%- begin -%>
+  <%- if @page && @page.show_siblings -%>
+    <%- pages = @page.self_and_siblings -%>
+    <%- if pages.length > 1 -%>
+    <%= content_tag :h3, "More #{@page.parent.link_text}" if @page.parent %>
+    <ul id="page_siblings">
+      <%= content_tag :li, link_to_unless_current(@page.parent.link_text,@page.parent.url) if @page.parent %>
+      <%- for page in pages -%>
+        <li><%= link_to_unless_current page.link_text, page.url %></li>
+      <%- end -%>
+    </ul>
+    <%- end -%>
+  <%- end -%>
+<%- rescue;end -%>

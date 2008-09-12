@@ -1,0 +1,69 @@
+
+<div id="Sidebar">
+<% unless @no_sidebar %>
+  <h4>A United Hospital Fund Campaign</h4>
+  	<form action="#" method="get" name="search">
+		  <input type="text" name="query" value="Search" onclick="this.value=''" size="15" />
+		  <input type="image" src="/images/arrow_button.gif" name="submit" id="Submit" />
+		  <span id="TextSize">Text size:
+			  <a id="Normal" href="javascript:TextSize('Normal')" class="active">A</a>
+			  <a id="Large" href="javascript:TextSize('Large')">A</a>
+			  <a id="Largest" href="javascript:TextSize('Largest')">A</a>
+		  </span>
+	  </form>
+	<h3>Guides &amp; Checklists</h3>
+	<ul>
+	  
+	  <% unless @left_top_menu == nil %>
+    <% @left_top_menu.children.each do |item| %>
+      <li>
+        <% if item.path == 'CaregiverTool' %>
+          <% @page_template = 'template_pdf' %>
+          <%= link_to item.title, item.url %>
+        <% elsif item.path == 'ProviderTool' %>
+          <%= link_to item.title, '/signups/new' %>
+        <% else%>
+          <%= link_to item.title, item.url %>
+        <% end %>
+      </li>
+      <% end %>
+    <% end %>
+	  
+	  
+	  <%# render :partial=>'content_blocks/li_container', :object=>@page, :locals=>{:group=>'left_checklist'} if @page %>
+    
+    <%# 
+		<li><a href="caregivers.html">For Family Caregivers</a></li>
+		<li><a href="providers.html">For Health Care Providers</a></li>
+		<li><a href="topical_guide">A Topical Guide</a></li>
+		<li><a href="show_me_everything">Show Me Everything</a></li>
+		%>
+		
+	</ul>
+	<ul>
+	  
+	  <% if @left_bottom_menu%>
+    <% @left_bottom_menu.children.each do |item| %>
+      <li>
+        <% if item.path == 'Signup' %>
+          <%= link_to item.title, '/signups/new' %>
+        <% else %>
+          <%= link_to item.title, item.url %>
+        <% end %>
+      </li>
+      <% end %>
+    <% end %>
+	  
+	  <%# render :partial=>'content_blocks/li_container', :object=>@page, :locals=>{:group=>'left_item'} if @page %>
+    
+    <%# 
+		<li><a href="learn_more">Learn More About This Campaign</a></li>
+		<li><a href="share_your_story">Share Your Story About What Works</a></li>
+		<li><a href="news">News</a></li>
+		<li><a href="about">About the United Hospital Fund</a></li>
+		%>
+		
+	</ul>
+	<a href="#"><img src="images/uhf_logo.png" alt="" /></a>
+<% end %>
+</div>	

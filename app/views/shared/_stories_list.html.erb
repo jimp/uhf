@@ -1,0 +1,12 @@
+
+<% stories_list.each do |child_page| %>
+<h3><%= link_to child_page.link_text, child_page.url %></h3>
+<p>
+  <%= child_page.description %><br/>
+  <% child_page.content_blocks.each do |block| %>
+    <%= block.text %>
+  <% end %>
+</p>
+<% end %>
+
+ <%# render :partial=>'survey_responses/survey_response', :locals=>{:survey_name=>'stories'}  %> 

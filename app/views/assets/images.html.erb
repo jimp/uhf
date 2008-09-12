@@ -1,0 +1,14 @@
+<%- unless @assets.size == 0 -%>
+<table class="grid">
+  <%- @assets.in_groups_of(5) do |assets| -%>
+  <tr>
+    <%- for asset in assets -%>
+    <td><%= image_tag asset.public_filename(:small), 
+      :onclick=>"$('#{@target_id}').value='#{asset.id}';$('image_preview').src='#{asset.public_filename(:small)}';Modalbox.hide();return false;" unless asset.nil? %></td>
+    <%- end -%>
+  </tr>
+  <%- end -%>
+</table>
+<%- else -%>
+There are no images in your gallery.
+<%- end -%>

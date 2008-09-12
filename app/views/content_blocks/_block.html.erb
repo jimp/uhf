@@ -1,0 +1,24 @@
+
+<% if (!admin? && defined? stripped  ) %>
+  <%= block.text =~ /^<p>(.*)<\/p>$/; $1 %>
+<% else %>
+  <%- if admin? -%>
+    <%- 
+      url_hash = {:blockable_type=>block.blockable_type.tableize, :blockable_id=>block.blockable_id, :group=>block.group, :id=>block.id} 
+      url_hash[:return_url]=return_url if defined?(return_url)
+    -%>
+    <%- div_for block, {:class=>'editable',
+      :ondblclick=>"document.location='#{edit_content_block_url(url_hash)}'"} do -%>
+      <%= block.text.blank? ? "<em>Add your content here</em>" : block.text %>
+      <p>&nbsp;
+        <% content_tag :span, :id=>"content_block_#{block.id}_toolbar" do %>
+          <%= link_to('edit', edit_content_block_url(url_hash)) %>
+        <% end %>
+      </p>
+    <%- end -%>
+  <%- else -%>
+    <%- content_tag :div do -%>
+      <%= block.text %>
+    <%- end -%>
+  <%- end -%>
+<%- end -%>

@@ -1,0 +1,43 @@
+<h1>Viewing Message</h1>
+
+<p>
+  <strong>From:</strong> <%= @message.from %>
+</p>
+
+<p>
+  <strong>To:</strong> <%= @message.recipients %>
+</p>
+
+<p>
+  <strong>CC:</strong> <%= @message.cc %>
+</p>
+
+<p>
+  <strong>BCC:</strong> <%= @message.bcc %>
+</p>
+
+<p>
+  <strong>Subject:</strong> <%= @message.subject %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+</p>
+
+<div>
+  <%= simple_format @message.body %>
+</div>
+
+<p>
+  <strong>Sent On:</strong> <%= @message.sent_on %>
+</p>
+
+<p>
+  <strong>Email Error Message:</strong> <%= @message.error_message %>
+</p>
+
+<p>
+  <strong>IP Address:</strong> <%= @message.ip_address %>
+</p>
+
+<%= link_to 'Back', messages_path %>

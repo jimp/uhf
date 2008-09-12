@@ -1,0 +1,26 @@
+<h1>Editing category</h1>
+
+<%= error_messages_for :category %>
+
+<% form_for(@category) do |f| %>
+  <p>
+    <b>Category group</b><br />
+    <%= f.collection_select :category_group_id, CategoryGroup.find(:all, :order => "position"), :id, :name %>
+  </p>
+
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Position</b><br />
+    <%= f.text_field :position %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', categories_path %>

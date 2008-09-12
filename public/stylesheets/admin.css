@@ -1,0 +1,144 @@
+body{
+  margin-bottom:110px;
+}
+#admin{
+  background:white;
+  text-align:left;
+  padding-top:8em;
+}
+#admin .gutter{
+  padding:1em 0 0 3em;
+}
+#dock{
+  text-align:center;
+  position:fixed;
+  bottom:0;
+  left:0;
+  background:#333;
+  width:100%;
+  z-index:99;
+  height:110px;
+}
+#dock a, #dock a:visited{
+  color:#d5d5d5;
+}
+.editable{
+  border:1px solid transparent;
+}
+.editable:hover{
+  border:1px dashed #ccc;
+}
+.toolbar{
+  background:#DDFFBB;
+  padding:.3em;
+}
+.help_section{
+  background:#FCFCFC;
+  padding:.5em;
+  border:1px solid #d5d5d5;
+}
+.help_section div{
+  border-bottom:1px dashed #ccc;
+  padding-bottom:1em;
+}
+.help_section div:last-child {
+  border-bottom:none;
+}
+img{
+  border:none;
+}
+.fieldWithErrors {
+  border:2px solid red;
+}
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+#errorExplanation p {
+  color: #333;
+  padding: .5em;
+}
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+  margin:0 0 0 2em;
+}
+.flash{
+  border:.2em solid #999;
+  border-left:2px solid #ccc;
+  border-top:2px solid #ccc;
+  padding:.5em;
+  font-weight:bold;
+  margin:0 0 1em 0;
+}
+table.cms{
+  border-collapse:collapse;
+}
+table.cms thead{
+  background:#DDFFBB;
+  color:#333;
+  font-size:90%;
+}
+table.cms tr:hover{
+  background:beige;
+}
+table.cms th, table.cms td{
+  text-align:left;
+  padding:3px;
+  border-bottom:1px solid #ccc;
+}
+table.cms td.link{
+  text-align:right;
+  width:50px;
+}
+table.cms td, table.cms th {
+  vertical-align:top;
+}
+table.cms th label, table.cms th{
+  font-size:.96em;
+}
+/* -------- Pagination --------- */
+/*
+.pagination {
+  padding: 3px;
+  margin: 3px;
+}
+.pagination a {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #aaaadd;
+  text-decoration: none;
+  color: #000099;
+}
+.pagination a:hover, .pagination a:active {
+  border: 1px solid #000099;
+  color: #000;
+}
+.pagination span.current {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #000099;
+  font-weight: bold;
+  background-color: #000099;
+  color: #FFF;
+}
+.pagination span.disabled {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #eee;
+  color: #ddd;
+}
+*/

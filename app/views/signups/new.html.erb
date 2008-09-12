@@ -1,0 +1,17 @@
+<div>
+<h1>Signup</h1>
+
+<%# error_messages_for :signup %>
+<%= '<p>Invalid email address</p>' if @error == 'true' %>
+
+<% form_for(@signup) do |f| %>
+  <p>
+    <b>Email Address</b><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.submit "Signup" %>
+  </p>
+<% end %>
+</div>
+<%# link_to 'Back', signups_path %>

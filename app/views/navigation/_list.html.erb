@@ -1,0 +1,20 @@
+<%# called like render :partial=>'/navigation/list', :object=>Page.main_menu, :locals=>{:ul_id=>'nav', :max_level=>2, :level=>0} %>
+<%- 
+  level = 0 if level.nil?
+  max_level = 2 if max_level.nil?
+-%>
+<%- if list.length > 0 -%>
+  <ul id="<%= ul_id %>">
+  <%- for child in list -%>
+    <%- if child.include_in_main_menu -%>
+      <%- has_children = child.children.length > 0 -%>
+      <li>
+        <%= link_to(child.link_text, child.url) %>
+        <%- if has_children;level += 1 -%>
+          <%= render :partial=>'/navigation/list', :object=>child.children, :locals=>{:ul_id=>"list_item_#{child.id}", :max_level=>max_level, :level=>level} unless level > max_level %>
+        <%- level -= 1;end -%>
+      </li>
+    <%- end -%>
+  <%- end -%>
+  </ul>
+<%- end -%>

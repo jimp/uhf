@@ -1,0 +1,56 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  partial_id: 1
+  parent_id: 
+  path: index
+  title: root
+  lft: 1
+  rgt: 8
+  description: people
+  jump_menu_position: 1
+  include_in_main_menu: true
+two:
+  id: 2
+  partial_id: 1
+  parent_id: 1
+  path: "c1"
+  title: about
+  lft: 2
+  rgt: 7
+  description: 
+  jump_menu_position: 2
+  include_in_main_menu: false
+three:
+  id: 3
+  partial_id: 1
+  parent_id: 2
+  path: "c2"
+  title: programs
+  lft: 3
+  rgt: 6
+  description: 
+  jump_menu_position: 0
+  include_in_main_menu: false
+four:
+  id: 4
+  partial_id: 1
+  parent_id: 3
+  path: "c3"
+  title: people
+  lft: 4
+  rgt: 5
+  description: 
+  jump_menu_position: 0
+  include_in_main_menu: false
+five:
+  id: 5
+  partial_id: 1
+  parent_id: 
+  path: "s1"
+  title: another
+  lft: 9
+  rgt: 10
+  description: people
+  jump_menu_position: 3
+  include_in_main_menu: true

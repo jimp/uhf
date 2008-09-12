@@ -1,0 +1,23 @@
+#!/bin/sh
+DATE=`date "+%d"`
+APP='<%= application %>'
+SERVER='<%= production_server_prefix %>'
+
+<% if backup_mysql %>
+mkdir -p /var/backup/$APP/mysql
+mysqldump -ubackup -pb4ckup! -h 10.0.2.218 $APP\_<%= rails_env %> | gzip > /var/backup/$APP/mysql/mysql-daily-$DATE.sql.gz
+<% end %>
+
+<% if backup_trac %>
+mkdir -p /var/backup/$APP/trac
+tar -czf /var/backup/$APP/trac/trac-daily-$DATE.tar.gz /var/www/apps/$APP/trac/*
+<% end %>
+
+<% if backup_files %>
+mkdir -p /var/backup/$APP/files
+rsync -a deploy@$SERVER.jasper.railsmachina.com:/var/www/apps/$APP/<%= rails_env %>/shared/public/ /var/backup/$APP/files
+<% end %>
+
+
+
+

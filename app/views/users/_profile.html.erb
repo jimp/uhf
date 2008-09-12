@@ -1,0 +1,27 @@
+<p><label for="user_login">Login</label><br/>
+  <%= form.text_field :login %>
+</p>
+
+<p><label for="user_email">Email</label><br/>
+  <%= form.text_field :email %>
+</p>
+
+<p><label for="user_password">Password</label><br/>
+  <%= form.password_field :password %>
+</p>
+
+<p><label for="user_password_confirmation">Confirm Password</label><br/>
+  <%= form.password_field :password_confirmation %>
+</p>
+
+<%- if can_edit %>
+<p>
+  <label for="user_role_id">Role</label><br/>
+  <%= form.collection_select :role_id, Role.find(:all), :id, :name %>
+  <%= link_to "(edit roles)", roles_url %>
+</p>
+<% end %>
+
+<p><label for="user_time_zone">Default timezone</label><br/>
+  <%= time_zone_select 'user', 'time_zone', TZInfo::Timezone.all.sort, :model => TZInfo::Timezone %>
+</p>

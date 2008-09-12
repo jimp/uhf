@@ -1,0 +1,28 @@
+<%- content_for :head do -%>
+  <style type="text/css" media="screen">
+    #contact-table{
+      border:0;
+    }
+    #contact-table td{
+      border:0;
+    }
+  </style>
+<%- end -%>
+
+<h1>Guest Book Entries</h1>
+
+<table id="contact-table">
+
+<% for guest_book in @guest_books %>
+  <tr>
+    <td><%= guest_book.created_at.strftime "On %b %d %Y <b>" %><%= h guest_book.name %> </b> wrote:</td>
+	</tr>
+	<tr>
+    <td align="left"><%=h guest_book.comment %></td>
+	</tr>
+	<tr></tr>
+    <%# link_to 'Destroy', guest_book, :confirm => 'Are you sure?', :method => :delete %>
+<% end %>
+</table>
+
+<br />

@@ -1,0 +1,39 @@
+<%- content_for :toolbar do -%>
+<p><%= link_to 'New role', new_role_path %></p>
+<%- end -%>
+<h2>Listing Roles</h2>
+
+<% unless @roles.size==0 %>
+<%= yield :toolbar %>
+<table class="cms">
+  <col style="width:400px;"/>
+  <col style="width:100px;"/>
+  <col/>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th style="text-align:center;">User Count</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for role in @roles %>
+    <tr>
+      <td onclick="document.location = '<%= edit_role_path(role) %>'" style="cursor:pointer;">
+        <%= role.name %>
+      </td>
+      <td onclick="document.location = '<%= edit_role_path(role) %>'" style="cursor:pointer;text-align:center;">
+        <%= role.users.count %>
+      </td>
+      <td class="link">
+        <%= link_to 'Edit', edit_role_path(role) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+There are currently no roles in the system.
+<% end %>
+
+<%= yield :toolbar %>

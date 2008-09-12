@@ -1,0 +1,22 @@
+<h1>Editing guest_book</h1>
+
+<%= error_messages_for :guest_book %>
+
+<% form_for(@guest_book) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Comment</b><br />
+    <%= f.text_field :comment %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @guest_book %> |
+<%= link_to 'Back', guest_books_path %>

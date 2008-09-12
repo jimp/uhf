@@ -1,0 +1,7 @@
+
+<div id="SiteInfo">
+	<a href="/sitemap">Site Map</a> &#8226; <%= mail_to('contact@uhf.com', 'Contact UHF') %>
+ <a href="/email">Contact UHF</a>
+</div>
+
+

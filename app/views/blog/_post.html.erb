@@ -1,0 +1,30 @@
+<%- 
+  attributes=" ondblclick=\"document.location='#{edit_post_url(post)}'\""
+-%>
+<h2 class="date-header"><%= link_to_unless_current post.pretty_date, post.url %></h2>
+<div class="post<%= " editable" if admin? %>"<%= attributes if admin? %>>
+  <a name="<%= post.id %>"></a>
+  <div class="post-body">
+    <div>
+      <div style="clear:both;"></div>
+      <%= post.body %>
+      <div style="clear:both; padding-bottom:0.25em"></div>
+    </div>
+  </div>
+  <p class="post-footer">
+    <em>posted at 
+      <a class="post-footer-link" href="<%= post.url %>" title="permanent link"> <%= post.pretty_time %> </a>
+      <%= " (#{pluralize(post.approved_comments.count,'comment')})" unless post.approved_comments.count==0 %>
+    </em>
+  </p>
+</div>
+
+<%- if defined?(show_comments) && show_comments==true -%>
+<%- if post.comments_count > 0 -%>
+<div class="comments">
+  <h2>Comments</h2>
+  <%= render :partial=>'comments/comment', :collection=>post.approved_comments %>
+</div>
+<%- end -%>
+<%= render :partial=>'/comments/form', :object=>post %>
+<%- end -%>

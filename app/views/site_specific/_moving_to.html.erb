@@ -1,0 +1,24 @@
+
+<% unless @menu == nil %>
+  <select name="toplace" id="toplace">
+    <option value="-1" >Select ...</option>
+    <% @menu.children.each do |item| %>
+      <option value="<%= item.id %>"><%= item.title || item.path %></option>
+    <% end %>
+  </select>
+<% else %>
+  <select name="toplace" id="toplace">
+    <option value="-1">Select ...</option>
+  </select>
+<% end %>
+
+
+<%= observe_field("toplace",
+        :update => "moving_button_id",
+        :url => 'pages/moving_button',
+        :with => "'id='+value",
+        :on => "changed")
+%>
+
+
+

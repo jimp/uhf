@@ -1,0 +1,119 @@
+<%# 
+Stories can be printed in 2 ways:
+* current page
+* entire story
+%>
+<%- 
+story, pages = nil, []
+
+if page && !page.new_record?
+  if page.parent && page.parent.parent # => the leaf node of the story
+    story = page.parent
+    pages = page.parent.children
+  elsif page.parent
+    story = page
+    pages = page.self_and_siblings
+  end
+end
+-%>
+
+<!-- begin left column -->
+<div class="column wide">
+  <%= render :partial => '/navigation/breadcrumbs' %>
+  <div>
+
+    <%- if @child_pages -%>
+    <%# if child_pages has been populated, display all content blocks for all of them %>
+    <%= render :partial=>'/shared/stories_list', :object => @child_pages %>
+    <%- else -%>
+    <%# this is the default - just show this page's content blocks %>
+    <%= render :partial=>'content_blocks/container', :object=>page, :locals=>{:group=>'main'} %>
+    <%- end -%>
+
+  </div>
+
+  <% if page.children.empty? && page.self_and_siblings.last == page %>
+  <p>
+    <%= link_to_remote("<img src='/images/icnQuestion.gif' height='16' width='16' border='0' alt='' class='relImage' />", :update=> 'survey_div', :url => {:controller=>'survey_responses', :action=>'gp_survey'}) %>
+    <%= link_to_remote("Did You Find This Story Helpful?", :update=> 'survey_div', :url => {:controller=>'survey_responses', :action=>'story_survey'}) %>
+  </p>
+  <div id="survey_div"></div>
+  <% end %>
+
+</div>
+<!-- end left column -->
+
+<div class="columnspacer"></div>
+
+<!-- begin right column -->
+<div class="column narrow">
+  <div class="rightitem">
+    <%= render :partial => "/shared/search" %>
+  </div>
+
+  <script type="text/javascript" charset="utf-8">
+
+  // opens the correct page in complete/print mode
+  openPrintPage = function(){
+    var url = determineCorrectPage();
+    url += "?print=true"
+    if($F('inpPageSelect') != "page"){
+      url += "&complete=true"
+    }
+    window.open(url);
+  }
+
+  // redirects the page to the email page with the correct url
+  redirectToEmailPage = function(){
+    window.open('/email?u='+determinCorrectPage());
+  }
+
+  // determines the correct url based on the selection in the dropdown list
+  determineCorrectPage = function(){
+    var url = "";
+    switch($F('inpPageSelect')){
+      case 'page':
+      url = '<%= escape_javascript(page.url) %>';
+      break;
+      <%- if story -%>
+      case 'story':
+      url = '<%= escape_javascript(story.url) %>';
+      break;
+      <%- end -%>
+    }
+    return url;
+  }
+  </script>
+
+  <div class="stripeupbox pageoptionscontainer">
+    <select name="inpPageSelect" id="inpPageSelect">
+      <option value="page">This Page</option>
+      <%- if story -%>
+      <option value="story">Entire Story</option>
+      <%- end -%>
+    </select>
+    <div class="pageoptionsbtn button">
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><%= link_to 'Print', (story || page).url+'?print=true&complete=true', :onclick => "openPrintPage();return false;" %></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><%= link_to("Email", "/email?u=#{u((story || page).url)}", :onclick => "redirectToEmailPage(); return false;" ) %></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+	    <span class="btnBlueSmMiddle">
+				<%= link_to 'Save', @page.url+'?complete=true&print=true&save=true' %>
+			</span>
+      <span class="btnBlueSmRight last"></span>
+    </div>
+  </div>
+
+  <div class="rightitem">
+    <%= render :partial => "/shared/text_size" %>
+  </div>
+
+  <%= render :partial => '/shared/category_sidebar', :locals => {:title => "Find Stories", :action => "/stories"} %>
+
+</div>
+<!-- end right column -->
+
+

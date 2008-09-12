@@ -1,0 +1,7 @@
+<h2>New Content Block</h2>
+
+<%= error_messages_for :content_block %>
+
+<% form_tag content_blocks_url(params[:blockable_type], params[:blockable_id], params[:group])  do |f| %>
+<%= render :partial => 'form' %>
+<% end %>

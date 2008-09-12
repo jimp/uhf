@@ -1,0 +1,80 @@
+<%- content_for :toolbar do -%>
+<%= will_paginate(@aliases) %>
+<p><%= link_to 'New Page Alias', new_alias_path %></p>
+<%- end -%>
+<h2>Listing Page Aliases</h2>
+<% unless @aliases.size==0 %>
+<%= yield :toolbar %>
+<table class="cms">
+  <col style="width:400px;"/>
+  <col style="width:100px;"/>
+  <col/>
+  <col/>
+  <thead>
+    <tr>
+      <th>Alias</th>
+      <th>Points to...</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- for aka in @aliases -%>
+    <%- can_edit = (aka.name==aka.page.url.strip_slashes ? false : true) -%>
+    <tr>
+      <td onclick="document.location = '<%= edit_alias_url(aka) %>'" style="cursor:pointer;<%= 'color:#ccc;' unless can_edit %>">
+        <%= aka.name %>
+      </td>
+      <td onclick="document.location = '<%= edit_alias_url(aka) %>'" style="cursor:pointer;">
+        <%= aka.page.url %>
+      </td>
+      <td class="link">
+        <%= link_to 'Test', aka.url %>
+      </td>
+      <td class="link">
+        <%= link_to 'Edit', edit_alias_url(aka) if can_edit %>
+      </td>
+      <td class="link">
+        <%= link_to 'Delete', aka, :confirm => "Any links that point to #{aka.name} will no longer work.\n\nAre you sure?", :method => :delete if can_edit %>
+      </td>
+    </tr>
+    <%- end -%>
+  </tbody>
+</table>
+<% else %>
+There are currently no aliases in the system.
+<% end %>
+
+<%= yield :toolbar %>
+
+<p>You may also want to look at <%= link_to 'pages', pages_url %></p>
+
+<h2>What is an alias?</h2>
+<p>
+  A <strong>Page Alias</strong> is another URL for a page. For example, if you have a page called "contact", but it used to be called "contact.html", you could enter an alias that
+  makes
+</p>
+<ul><li><%= app_url %>contact.html</li></ul>
+<p>point to</p>
+<ul><li><%= app_url %>contact.</li></ul>
+<h2>Why are some aliases grayed out and not editable?</h2>
+<p>
+  You do not need to create aliases for standard pages.  By default, all pages are aliases by their "path".  So if you create a page called "about", and another page underneath it called "people", two aliases are created:
+</p>
+<p>
+  You cannot edit or delete these aliases, since they are updated automatically when you save a page.  They are listed here purely for reference.
+</p>
+<ul>
+  <li>/about</li>
+  <li>/about/people</li>
+</ul>
+<p>
+  To see a list of all aliases in the system, see below.
+</p>
+<h2>Why are there so many aliases?</h2>
+<p>
+  Every time you rename the path of a page, the url changes. This is good because it lets you have complete control over your site for search engine optimization purposes. However, it
+  can also cause broken links. As such, the site stores all of the old urls to ensure that no links are ever broken. You can manually delete an alias if you like, but beware of broken
+  links in your web analytics program so you can notify sites with old links.
+</p>

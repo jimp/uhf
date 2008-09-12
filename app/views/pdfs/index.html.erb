@@ -1,0 +1,21 @@
+<h1>Tools</h1>
+
+<table>
+  <tr>
+    <th>Filename</th>
+    <th>URL</th>
+  </tr>
+
+<% for pdf in @pdfs %>
+  <tr>
+    <td> <%= link_to pdf.filename, "/tool/#{pdf.id}" %></td>
+    <td> <%= "/tool/#{pdf.id}" %> </td>
+    <td><%# link_to 'Edit', edit_pdf_path(pdf) %></td>
+    <td><%# link_to 'Destroy', pdf, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Upload Tool', new_pdf_path %>

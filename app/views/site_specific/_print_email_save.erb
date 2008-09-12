@@ -1,0 +1,24 @@
+<script type="text/javascript" charset="utf-8">
+
+ // opens the correct page in complete/print mode
+ openPrintPage = function(){
+   var url = location.href;
+   //alert(url);
+   url += "?print=true"
+   if($F('inpPageSelect') != "page"){
+     url += "&complete=true"
+   }
+   window.open(url);
+ }
+
+ // redirects the page to the email page with the correct url
+ redirectToEmailPage = function(){
+   window.open('/email?u='+ location.href );
+ }
+
+ </script>
+
+ <%= link_to 'Print', @page.url+'?print=true', :onclick => "openPrintPage();return false;", :id => "Print", :class => 'actions' %>
+<%= link_to("Email", "/email?u=#{u(@page.url)}", :onclick => "redirectToEmailPage();return false;", :id => "Email", :class => "actions" ) %>
+<%= link_to 'Save', @page.url+'?print=true&save=true', :id => "Save", :class => "actions"  %>
+

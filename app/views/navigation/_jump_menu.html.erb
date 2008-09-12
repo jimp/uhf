@@ -1,0 +1,15 @@
+<%- if (pages = Page.jump_menu).length > 0 -%>
+<script language="javascript" type="text/javascript">
+  function jump(link){
+    //alert(link);
+    document.location=link;
+  }
+</script>
+
+<select onchange="jump(this.value);">
+  <option value="#">I'm looking for...</option>
+  <%- for page in pages -%>
+  <option value="<%= page.url %>"><%= page.link_text %></option>
+  <%- end -%>
+</select>
+<%- end -%>

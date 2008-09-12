@@ -1,0 +1,37 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  name: "/"
+  page_id: 1
+  created_at: 2007-08-27 16:40:41
+  updated_at: 2007-08-27 16:40:41
+two:
+  id: 2
+  name: "c1"
+  page_id: 2
+  created_at: 2007-08-27 16:40:41
+  updated_at: 2007-08-27 16:40:41
+three:
+  id: 3
+  name: "c1/c2"
+  page_id: 3
+  created_at: 2007-08-27 16:40:41
+  updated_at: 2007-08-27 16:40:41
+four:
+  id: 4
+  name: "c1/c2/c3"
+  page_id: 4
+  created_at: 2007-08-27 16:40:41
+  updated_at: 2007-08-27 16:40:41
+five:
+  id: 5
+  page_id: 20
+  name: "not/in/database"
+  created_at: 2007-08-27 16:40:41
+  updated_at: 2007-08-27 16:40:41
+six:
+  id: 6
+  page_id: 5
+  name: "s1"
+  created_at: 2007-08-27 16:40:41
+  updated_at: 2007-08-27 16:40:41

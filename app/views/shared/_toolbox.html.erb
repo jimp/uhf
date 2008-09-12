@@ -1,0 +1,53 @@
+<!-- begin left column -->
+<div class="column wide">
+  <%= render :partial => '/navigation/breadcrumbs' %>
+  <div>
+    <%= render :partial=>'content_blocks/container', :object=>page, :locals=>{:group=>'main'} %>
+  </div>
+
+    <%= link_to_remote("<img src='/images/icnQuestion.gif' height='16' width='16' border='0' alt='' class='relImage' />", :update=> 'survey_div', :url => {:controller=>'survey_responses', :action=>'gp_survey'}) %>
+    <%= link_to_remote("Did You Find This Tool Helpful?", :update=> 'survey_div', :url => {:controller=>'survey_responses', :action=>'tool_survey'}) %>
+    <br/><div id="survey_div"></div>
+
+
+
+</div>
+<!-- end left column -->
+
+<div class="columnspacer"></div>
+
+<!-- begin right column -->
+<div class="column narrow">
+  <div class="rightitem">
+    <%= render :partial => "/shared/search" %>
+  </div>
+
+  <div class="stripeupbox pageoptionscontainer">
+    <select name="inpPageSelect" id="inpPageSelect">
+      <option value="">This Page</option>        
+    </select>
+    <div class="pageoptionsbtn button">
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><%= link_to 'Print', @page.url+'?print=true', :popup => true %></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><%= link_to 'Email', "/email?u=#{@page.url}" %></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+	    <span class="btnBlueSmMiddle">
+				<%= link_to 'Save', @page.url+'?complete=true&print=true&save=true' %>
+			</span>
+      <span class="btnBlueSmRight last"></span>
+    </div>  
+  </div>
+
+
+  <div class="rightitem">
+    <%= render :partial => "/shared/text_size" %>
+  </div>		
+
+  <%= render :partial => '/shared/category_sidebar', :locals => {:title => "Find Tools", :action => "/toolbox"} %>
+</div>
+<!-- end right column -->  
+
+

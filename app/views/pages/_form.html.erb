@@ -1,0 +1,235 @@
+<%= error_messages_for :page %>
+
+<% form_for @page do |f| %>
+<p class="toolbar">
+  <%= submit_tag 'Save' %>
+  <%= link_to 'Cancel and Go Back', pages_url %>
+</p>
+<p>
+  <%- if @page.new_record? || @page.path=='index' -%>
+  <%= f.hidden_field :parent_page_id %>
+  <%- else -%>
+  <label for="page_parent_page_id">Move To</label><br/>
+  <%= f.collection_select :parent_page_id, @page.all_non_children, :id, :url, :include_blank=>true %>
+  <%- end -%>
+</p>
+<%- if @page.path=='index' -%>
+<p>
+  This is the home (index) page
+</p>
+<%= f.hidden_field :path %>
+<%- else -%>
+<p>
+  <label for="page_path">Path</label><br/>
+  <%= @parent ? @parent.url : (@page.parent ? @page.parent.url : '') %>
+  <%= f.text_field :path %>
+</p>
+<%- end -%>
+<!--
+<p>
+  <label for="page_page_type">Page Type</label><br/>
+  <%# f.select :page_type, ['','Story', 'Tool', 'Partnership'] %>
+</p>
+-->
+<p>
+  <label for="page_title">Title</label><br/>
+  <%= f.text_field :title %>
+</p>
+
+<p>
+  <label for="page_title">Sub Title</label><br/>
+  <%= f.text_field :sub_title %>
+</p>
+
+<p>
+  <label for="page_title">Right Hand Menu Title</label><br/>
+  <%= f.text_field :menu_title %>
+</p>
+
+
+<p>
+  <%# <label for="page_link_text">Link Text</label><br/> %>
+  <%# f.text_field :link_text %>
+  <%= f.hidden_field :link_text %>
+</p>
+<!--
+<p>
+  <%= f.check_box :include_in_main_menu %><label for="page_include_in_main_menu">Include in Main Menu</label><%= help_link('main_menu') %>
+</p>
+<p>
+  <%= f.check_box :show_siblings %><label for="page_show_siblings">Show Submenu of Sibling Pages</label><%= help_link('siblings') %>
+</p>
+<p>
+  <%= f.check_box :show_children %><label for="page_show_children">Show Submenu of Child Pages</label><%= help_link('children') %>
+</p>
+<p>
+  <%= f.check_box :show_breadcrumbs %><label for="page_show_breadcrumbs">Show Breadcrumb Navigation</label><%= help_link('breadcrumbs') %>
+</p>
+<p>
+  <%= f.text_field :jump_menu_position, :size=>2 %> <label for="page_jump_menu_position">Jump Menu Position<%= help_link('jump_menu') %></label>
+</p>
+-->
+
+<p>Choose how you would like to display your page:</p>
+
+<table style="border-collapse:collapse;">
+  <%- for template in Partial.find(:all, :order=>'position', :conditions=>{:directory=>'templates'}) -%>
+    <% unless template.name == 'template_index' || template.name == 'template_menu'  %>
+    <tr>
+      <td style="text-align:center;vertical-align:top;border:1px solid #ccc;padding:.5em;">
+        <label for="page_partial_id_<%= template.id %>"><%= image_tag "templates/#{template.thumbnail}" %></label>
+        <p><%= f.radio_button :partial_id, template.id %></p>
+      </td>
+      <td style="text-align:left;vertical-align:top;padding:.5em;border:1px solid #ccc;">
+        <strong><%# template.name %></strong>
+        <p><%= template.description %></p>
+      </td>
+    </tr>
+    <% end -%>
+  <%- end -%>
+</table>
+<!--
+<p>
+  <label for="page_css_identifier">CSS Identifier</label><br/>
+  <%= f.text_field :css_identifier %>
+</p>
+<p>
+  <label for="page_description">Description (used in meta tag and site map)</label><br/>
+  <%= f.text_area :description, :rows=>5 %>
+</p>
+-->
+
+<h3>Categories</h3>
+
+<%# render :partial => "/shared/category_list", :locals => {:checked_boxes => @categories, :force => true} %>
+
+<p class="toolbar">
+  <%= submit_tag 'Save' %>
+  <%= link_to 'Cancel and Go Back', pages_url %>
+</p>
+<% end %>
+
+<!--
+<div class="help_section">
+  <h2>Help Section</h2>
+
+  <div id="path">
+    <h3>Path</h3>
+    <p>
+      The Path is what you see in the address bar of your browser, and what appear on links.  So if you have a Path of "about", it would create a url like <%= app_url %>about
+    </p>
+    <p>
+      NOTE: if you change the path, the old url will still work until you create a new page at that url
+    </p>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="title">
+    <h3>Title</h3>
+    <p>
+      The title is what appears in the title bar of the browser, and often times what appears in the results for search engines.
+    </p>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="link_text">
+    <h3>Link Text</h3>
+    <p>
+      The Link Text is the text that will appear in the Main Menu, Sub Menus, Jump Menus, Breadcrumb Navigation and the Site Map.
+      If you leave this field empty, it defaults to the same name as the Path.
+    </p>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="main_menu">
+    <h3>The Main Menu</h3>
+    <p>
+      If you site has a dynamic main menu (that is, one that hasn't been hard-coded by Jasper), then checking or unchecking this option 
+      allows you to control what links appear in the menu.
+    </p>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="siblings">
+    <h3>Sibling Subnavigation</h3>
+    <p>
+      Checking "Show Submenu of Sibling Pages" will cause a menu to show up in the sidebar that lists:
+    </p>
+    <ul>
+      <li>Link to the Parent Page (if there is a parent)</li>
+      <li>Links to all pages at the same level</li>
+    </ul>
+    <p>
+      An example of a Sibling Subnavigation Menu would be
+    </p>
+    <ul>
+      <li><a href="#">Parent Page</a></li>
+      <li><a href="#">Some Sibling</a></li>
+      <li>This Page</li>
+      <li><a href="#">Another Sibling</a></li>
+    </ul>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="children">
+    <h3>Children Subnavigation</h3>
+    <p>
+      Checking "Show Submenu of Child Pages" will cause a menu to show up in the sidebar that lists:
+    </p>
+    <ul>
+      <li>Link to the this page</li>
+      <li>Links to all pages directly beneath this page</li>
+    </ul>
+    <p>
+      An example of a Children Subnavigation Menu would be
+    </p>
+    <ul>
+      <li>This Page</li>
+      <li><a href="#">Some Sub Page</a></li>
+      <li><a href="#">Another Sub Page</a></li>
+    </ul>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="breadcrumbs">
+    <h3>Breadcrumb Navigation</h3>
+    <p>
+      Breadcrumb navigation looks like "<a href="#">Home Page</a> &rarr; <a href="#">Subpage</a> &rarr; Subpage" and appears near the top of the page.
+    </p>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="jump_menu_index">
+    <h3>Jump Menu Position</h3>
+    <p>
+      A jump menu is a drop down list with pages.  If you specify a "Jump Menu Position" of anything greater than 1, it will appear in the jump menu.
+    </p>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="template">
+    <h3>Page Template</h3>
+    <p>
+      There are various page templates you can choose from.  If you need more page template, please contact Jasper.
+    </p>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="css">
+    <h3>CSS Identifier</h3>
+    <p>
+      The CSS identifier is an advanced option that will often only be used by Jasper Design designers.  It's a unique identifier for this page that affects style issues.
+    </p>
+    <a href="#top">back to top</a>
+  </div>
+
+  <div id="description">
+    <h3>Description</h3>
+    <p>
+      The description only appears in the HTML meta tag, and may also be useful for a site map.
+    </p>
+    <a href="#top">back to top</a>
+
+  </div>
+</div>
+-->

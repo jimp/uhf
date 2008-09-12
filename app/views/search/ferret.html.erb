@@ -1,0 +1,50 @@
+<!-- begin left column -->
+<div class="column wide">
+<%- if !@pages.nil? && defined?(@pages.page_count) -%>
+<%- content_for :toolbar do -%>
+<%= will_paginate(@pages) %>
+<%- end -%>
+<%= yield :toolbar %>
+<p><%= pluralize(@pages.length,'Result') %> for "<%=h params[:q] %>"</p>
+<%- for page in @pages -%>
+<div class="search_result">
+  <p class="title"><%= link_to page.link_text, page.url %></p>
+  <div class="snippet"><%= highlight(excerpt(strip_tags(page.content_block_text), params[:q].split.first, 50),params[:q].split.first) %></div>
+  <p class="link"><%= app_url + page.url.gsub(/^\//,'')  %></p>
+</div>
+<%- end -%>
+<%= yield :toolbar %>
+<%- end -%>
+</div>
+<!-- end left column -->
+
+<div class="columnspacer"></div>
+<!-- begin right column -->
+<div class="column narrow">
+  <div class="rightitem">
+    <%= render :partial => "/shared/search" %>
+  </div>
+
+  <div class="stripeupbox pageoptionscontainer">
+    <select name="inpPageSelect" id="inpPageSelect">
+      <option value="">This Page</option>        
+    </select>
+    <div class="pageoptionsbtn button">
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><a href="#">Print</a></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><a href="#">Email</a></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><a href="#">Save</a></span>        
+      <span class="btnBlueSmRight last"></span>
+    </div>  
+  </div>
+
+  <div class="rightitem">
+    <%= render :partial => "/shared/text_size" %>
+  </div>		
+
+</div>
+<!-- end right column -->  

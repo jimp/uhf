@@ -1,0 +1,4 @@
+module GuestBooksHelper
+  
+  
+end

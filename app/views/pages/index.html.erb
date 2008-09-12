@@ -1,0 +1,125 @@
+<%- content_for :toolbar do -%>
+<%- if defined?(@pages.page_count) -%>
+<%= will_paginate(@pages) %>
+<%- end -%>
+<p><%= link_to 'New Top-Level Page', new_page_path %></p>
+<%- end -%>
+
+<%- if @search -%>
+<h2>Pages that match "<%= params[:q] %>"</h2>
+<p><%= link_to '&larr; view all pages', pages_url %></p>
+<%- else -%>
+<h2>Listing Pages</h2>
+<%- end -%>
+
+<%- form_tag search_pages_url, :method=>:get do -%>
+  <fieldset>
+    <legend>Search pages</legend>
+    <p><%= text_field_tag :q  %> <%= submit_tag 'search' %></p>
+  </fieldset>
+<%- end -%>
+
+<% unless @pages.size==0 %>
+<%= yield :toolbar %>
+<table class="cms">
+  <col style="width:275px;"/>
+  <col/>
+  <col/>
+  <col/>
+  <col/>
+  <thead>
+    <tr>
+      <th>Path</th>
+      <th>Move</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for page in @pages %>
+    <tr>
+      <td onclick="document.location = '<%= edit_page_url(page) %>'" style="cursor:pointer;">
+        <span style="color:#ccc">
+        <%- page.level.times do -%>
+        <%= "&nbsp;&nbsp;&nbsp;&nbsp;" %>
+        <%- end -%>
+        </span>
+        <%= page.path %>
+      </td>
+      <td>
+        <%= link_to '&nbsp;&uarr;&nbsp;', move_left_page_path(page), :method=>:post, :style=>'text-decoration:none;' %>
+        <%= link_to '&nbsp;&darr;&nbsp;', move_right_page_path(page), :method=>:post, :style=>'text-decoration:none;' %>         
+      </td>
+      <td>
+        <%= link_to 'New Subpage', add_child_page_path(page) %>
+      </td>
+      <td>
+        <%= link_to 'Preview', page.url %>
+      </td>
+      <td class="link">
+        <%= link_to 'Edit', edit_page_path(page) %>
+      </td>
+      <td class="link">
+        <%= link_to 'Delete', page, :confirm => 'Are you sure?', :method => :delete unless page.path=='index' %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<p>
+  <%- if @search -%>
+  No Search Results Match Your Query: "<%= params[:q] %>"
+  <%- else -%>
+  There are currently no pages in the system.
+  <%- end -%>
+</p>
+<% end %>
+
+<%= yield :toolbar %>
+
+
+<%- unless @search -%>
+<!--><p>You may also want to look at <%= link_to 'aliases', aliases_url %></p>
+
+<h2>What is the difference between a Top-Level page and a Subpage?</h2>
+<p>
+  A top-level page is a page with a url that appears directly after your domain name.  So if your new page has a path of "about", a top level page would look like:
+</p>
+<ul><li><%= app_url %>about</li></ul>
+<p>
+  A Subpage is a page that is beneath another page - so if you had a "people" page under "about" it would look like:
+</p>
+<ul><li><%= app_url %>about/people</li></ul>
+
+<h2>What does moving a page up or down do?</h2>
+<p>
+  Pages appear in the same order throughout all navigation elements on the site.  You can define the order by moving a page up or down.
+</p>
+<p>
+  This is different than the jump menu index, which only controls the order that the page appears in the jump menu.
+</p>
+
+<h2>I want to create a page that has the same path, but in different sections.  How to I do this?</h2>
+<p>
+  In the unique case that you want to create multiple pages with the same path, you must first create the page with a unique path, then edit it afterwards.  For example, if you want to create pages that look like this:
+</p>
+<ul>
+  <li><%= app_url %>hospitals/locations</li>
+  <li><%= app_url %>restaurants/locations</li>
+</ul>
+<small>note the repeated "locations" path</small>
+<p>
+  you would have to do the following:
+</p>
+<ol>
+  <li>Create a top-level page with the path "hospitals"</li>
+  <li>Create a subpage under hospitals with the path "locations"</li>
+  <li>Create a top-level page with the path "restaurants"</li>
+  <li>Create a subpage under restaurants with the path "locations2"</li>
+  <li>Edit the "locations2" page and rename the path to "locations"</li>
+</ol>
+-->
+<%- end -%>

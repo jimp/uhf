@@ -1,0 +1,24 @@
+/*IE 6 Fixes*/
+
+#Masthead, #NavForm { behavior: url(scripts/iepngfix.htc); }
+
+#NavForm {background: url(../img/roundedbox_middle_ie6.png) no-repeat; }
+
+#Content { width: 611px; margin-left: 0px; float: left; }
+#Home .contentbox { width: 260px; }
+
+#Sidebar form #Submit { vertical-align: top; }
+#Sidebar { width: 188px; }
+
+#TextSize #Large { font-size: 130%; }
+#TextSize #Largest { font-size: 160%; }
+
+#SubNav .actions { margin-top: 35px; padding-bottom: 0; }
+
+#SubNav #NextPage { width: 174px; }
+
+#SubNav #NextPage a { padding-left: 25px; padding-right: 60px; width: 89px; }
+
+#NavFormWrapperTop { overflow: hidden;  }
+
+#Home #PrimaryContent { margin-top: 181px; }

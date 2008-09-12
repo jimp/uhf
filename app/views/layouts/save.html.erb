@@ -1,0 +1,15 @@
+<%# 
+This is the layout that will render whenever any page is accessed with ?print=true
+%>
+<html>
+<head>
+<%= stylesheet_link_tag "print", :media => 'all' %>
+</head>
+<body>
+<%= yield %>
+<%#  
+It's annoying to have javascript call print on every page during development
+So the print command is only issued in the production environment
+%>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<%- content_for :head do -%>
+  <style type="text/css" media="screen">
+    #contact-table{
+      border:0;
+    }
+    #contact-table td{
+      border:0;
+    }
+  </style>
+<%- end -%>
+
+<% form_tag('/site_mailer/create_email') do %>
+  <table id="contact-table">
+  	<tr>
+  		<td colspan="2">
+
+		<%= 
+			if params[:mode] == 'guestbook' 
+				"Message for the guestbook"
+			else
+				"Your feedback"
+			end
+		%>
+  		</td>
+  	</tr>
+    <tr>
+      <td align="right">Your Email Address:</td>
+      <td align="left"><%= text_field :message, :email, :size=>40, :value=>params[:from] %></td>
+    </tr>
+    <tr>
+      <td align="right">Message:</td>
+      <td align="left"><%= text_area :message, :message, :rows =>5, :cols=>40, :value=>params[:body] %></td>
+    </tr>
+    <tr > 
+      <td>
+      	<%= hidden_field :message, :mode, :value=>params[:mode] %>
+      </td>
+      <td>
+	  <%= submit_tag "Send" %>
+      </td>
+    </tr>
+  </table>
+<% end %>

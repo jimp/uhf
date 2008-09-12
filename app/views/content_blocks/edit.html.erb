@@ -1,0 +1,5 @@
+<h2>Edit Content Block</h2>
+
+<% form_tag content_block_url(params[:blockable_type], params[:blockable_id], params[:group], @content_block.id), :method=>:put  do |f| %>
+<%= render :partial => 'form' %>
+<% end %>

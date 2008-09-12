@@ -1,0 +1,13 @@
+<%- div_for comment do -%>
+<p>
+  <%- if comment.website? -%>
+  <%= link_to(comment.name, comment.website) %>
+  <%- else -%>
+  <%= comment.name %>
+  <%- end -%>
+</p>
+<div>
+  <%=h comment.body %>
+</div>
+<p>Posted <%= time_ago_in_words(comment.created_at) %> ago</p>
+<%- end -%>

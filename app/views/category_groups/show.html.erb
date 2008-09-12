@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @category_group.name %>
+</p>
+
+<p>
+  <b>Positions:</b>
+  <%=h @category_group.position %>
+</p>
+
+
+<%= link_to 'Edit', edit_category_group_path(@category_group) %> |
+<%= link_to 'Back', category_groups_path %>

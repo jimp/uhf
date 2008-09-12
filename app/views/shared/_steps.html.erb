@@ -1,0 +1,189 @@
+<%# 
+Steps can be emailed/printed/saved in one of three ways:
+* current page
+* entire guiding principle
+* entire step
+%>
+<%- 
+step, gp, pages = nil, nil, []
+
+if page && !page.new_record?
+  if page.parent && page.parent.parent # => the action step of a guiding principle
+    step = page.parent.parent
+    gp = page.parent
+    pages = page.parent.parent.children
+  elsif page.parent
+    step = page.parent
+    gp = page
+    pages = page.self_and_siblings
+  else
+    step = page
+    gp = nil
+    pages = page.children
+  end
+end
+-%>
+
+<!-- begin left column -->
+<div class="column wide">
+  <%= render :partial => '/navigation/breadcrumbs' %>
+
+  <%# The headers and blue dots %>
+  <%- if page.parent -%>
+  <%- if page.parent.parent %>
+  <h1><%= page.parent.parent.title %></h1>
+  <div class="icons">
+    <a href="<%= page.parent.url %>"><img src="/images/icnTanDot.gif" height="12" width="12" border="0"  alt=""/></a>
+    <% page.self_and_siblings.each do |loop_page| %>
+    <%= link_to(image_tag(loop_page == page ? "icnBlueDot.gif" : "icnTanDot.gif"), loop_page.url) %>
+    <% end	%>
+  </div>
+  <h2 class="blue">Guiding Principle # <%= (pages.index(page.parent)+1).to_s %> </h2>  			
+    <% else %>
+    <h1><%= page.parent.title %></h1>
+    <div class="icons">
+      <a href="<%= page.url %>"><img src="/images/icnBlueDot.gif" height="12" width="12" border="0"  alt=""/></a>
+      <% page.children.each do |loop_page| %> 
+      <a href="<%= loop_page.url  %>"><img src="/images/icnTanDot.gif" height="12" width="12" border="0"  alt=""/></a>	 
+      <% end	%>
+    </div>
+    <h2 class="blue">Guiding Principle # <%= (pages.index(page)+1).to_s %> </h2>  			
+      <%- end -%>  	  		
+      <%- else -%>  	  		
+
+      <h1><%= @page.title %></h1>		
+      <%- end %>  	  		
+
+      <div>
+        <%= render :partial=>'content_blocks/container', :object=>page, :locals=>{ :group=>'main'} %>
+      </div>
+
+
+	<p class="relatedlinks">
+    	
+	<% if page.children.empty? && page.self_and_siblings().last() == page %>
+    	  <%= link_to_remote("<img src='/images/icnQuestion.gif' height='16' width='16' border='0' alt='' class='relImage' />", :update=> 'survey_div', :url => {:controller=>'survey_responses', :action=>'gp_survey'}) %>
+    	  <%= link_to_remote("Did You Find This Guiding Principle Helpful?", :update=> 'survey_div', :url => {:controller=>'survey_responses', :action=>'gp_survey'}) %>
+    <% end %>
+    	 
+    <br/>
+      <%- if page != page.root %>
+        <a href="/survey/gp_survey"><img src="/images/btnBlue_arrow_left.gif" height="16" width="16" border="0" alt="" class="relImage" /></a>
+        <a href="<%= page.root.url %>">Back to <%= page.root.link_text %> Guiding Principles</a>
+      <%- end %>
+	</p>
+
+	<div id="survey_div"> </div>
+
+    </div>
+    <!-- end left column -->
+
+    <div class="columnspacer"></div>
+
+    <!-- begin right column -->
+    <div class="column narrow">
+      <div class="rightitem">
+        <%= render :partial => "/shared/search" %>
+      </div>
+
+      <script type="text/javascript" charset="utf-8">
+
+      // opens the correct page in complete/print mode
+      openPrintPage = function(){
+        var url = determineCorrectPage();
+        url += "?print=true"
+        if($F('inpPageSelect') != "page"){
+          url += "&complete=true"
+        }
+        window.open(url);
+      }
+
+      // redirects the page to the email page with the correct url
+      redirectToEmailPage = function(){
+        window.open('/email?u='+determinCorrectPage());
+      }
+
+      // determines the correct url based on the selection in the dropdown list
+      determineCorrectPage = function(){
+        var url = "";
+        switch($F('inpPageSelect')){
+          case 'page':
+          url = '<%= escape_javascript(page.url) %>';
+          break;
+          <%- if gp -%>
+          case 'priniciple':
+          url = '<%= escape_javascript(gp.url) %>';
+          break;
+          <%- end -%>
+          case 'step':
+          url = '<%= escape_javascript(step.url) %>';
+          break;
+        }
+        return url;
+      }
+      </script>
+
+      <div class="stripeupbox pageoptionscontainer">
+        <select name="inpPageSelect" id="inpPageSelect">
+          <option value="page">This Page</option>  
+          <%- if gp # don't add the guiding principle unless we're on a guiding principle page -%>
+          <option value="principle">This Guiding Principle</option>
+          <%- end -%>
+          <option value="step">This Entire Step</option>
+        </select>
+        <div class="pageoptionsbtn button">
+          <span class="btnBlueSmLeft"></span>
+          <span class="btnBlueSmMiddle"><%= link_to 'Print', step.url+'?print=true&complete=true', :onclick => "openPrintPage();return false;" %></span>
+          <span class="btnBlueSmRight"></span>
+          <span class="btnBlueSmLeft"></span>
+          <span class="btnBlueSmMiddle"><%= link_to("Email", "/email?u=#{u(page.url)}", :onclick => "redirectToEmailPage();return false;" ) %></span>
+          <span class="btnBlueSmRight"></span>
+          <span class="btnBlueSmLeft"></span>
+			    <span class="btnBlueSmMiddle">
+						<%= link_to 'Save', @page.url+'?complete=true&print=true&save=true' %>
+					</span>
+          <span class="btnBlueSmRight last"></span>
+        </div>  
+      </div>
+
+      <div class="rightitem">
+        <%= render :partial => "/shared/text_size" %>
+      </div>		
+
+      <div class="rightitem">
+        <ul class="sidebar">
+          <li>
+
+          <% if page.parent == nil %>
+            <h6><%= step.link_text %> <br/>GUIDING PRINCIPLES</h6>
+            <ul class="sublist">
+              <%- count=1; if pages.length > 0; pages.each do |child| -%>
+              <li>
+                <a href="<%= child.url %>"><span><%= count %></span></a>
+                <div>
+                  <%= link_to child.title, child.url %> 
+                </div>
+                <%- count = count+1 -%>
+              </li>
+              <% end; end %>
+            </ul>  
+          <% end %>
+          </li>
+          <li class="padded"><a href="/toolbox?step=<%= step.path.singularize %>"><span><%= step.link_text %></span> Toolbox</a></li>
+          <li class="padded"><a href="/stories?step=<%= step.path.singularize %>"><span><%= step.link_text %></span> Stories</a></li>
+
+          <%- if page != page.root %>
+          <li class="Back">
+            <a href="#"><img src="/images/BtnBlue_arrowback.gif" height="16" width="16" alt="" border="0" class="floatleft" /></a>
+            <div class="text"><%= link_to 'Back to ' + page.root.link_text + " Guiding Principles", page.root.url %></div>
+            <div class="clear"> </div>
+          </li>      
+          <%- end %>
+
+        </ul>      
+      </div>
+    </div>
+
+    <!-- end right column -->  
+
+

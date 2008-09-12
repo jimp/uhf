@@ -1,0 +1,37 @@
+
+<%- content_for :head do -%>
+  <style type="text/css" media="screen">
+    #contact-table{
+      border:0;
+    }
+    #contact-table td{
+      border:0;
+    }
+  </style>
+<%- end -%>
+
+
+
+<% form_for(@guest_book) do |f| %>
+	<table id="contact-table">
+		<tr>
+			<td></td>
+			<td>Message for the guestbook</td>
+		</tr>
+  	<tr>
+    	<td align="right">Your Email Address:</td>
+    	<td align="left"><%= f.text_field :name, :size=>40 %></td>
+  	</tr>
+  	<tr>
+    	<td align="right">Message:</td>
+    	<td align="left"><%= f.text_area :comment, :rows =>5, :cols=>40 %></td>
+  	</tr>
+  	<tr >
+	 		<td></td>
+    	<td>
+				<%= submit_tag "Send" %>
+			</td>
+  	</tr>
+	</table>
+<% end %>
+

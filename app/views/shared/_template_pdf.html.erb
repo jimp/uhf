@@ -1,0 +1,34 @@
+
+
+<div id="NavFormWrapperTop">
+  <div id="NavFormWrapperBottom">
+    <form action="caregivers_item" name="navform" method="get" id="NavForm">
+	    <label>I'm caring for someone in a…</label>
+	    <%= render :partial => 'site_specific/caregiver_from' %>
+	    
+	    <label>moving to...</label>
+	      <div id="to_place_id">
+    	    <%= render :partial => 'site_specific/moving_to' %>
+    	  </div>
+
+          <%= render :partial=>'site_specific/moving_button' %>
+
+    </form>
+  </div>
+</div>
+
+<%= observe_field("fromplace",
+        :update => "to_place_id",
+        :url => 'pages/moving_to_dropdown',
+        :with => "'id='+value",
+        :on => "changed")
+%>
+
+<div id="Content">
+  <% Pdfs.find(:all, :conditions => 'page = ' + @page_type).each_with_index do |pdf, index| %>
+    <%= render :partial=>'content_blocks/container', :object=>@page, :locals=>{:group=>"pdf_#{index}"} %>
+    <p> <%= link_to pdf.filename, "/pdfs/#{pdf.id}" %></p>
+    <% end %>
+</div>
+
+

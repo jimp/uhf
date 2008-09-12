@@ -1,0 +1,26 @@
+
+<div class="stripeupbox pageoptionscontainer">
+  <select name="inpPageSelect" id="inpPageSelect">
+    <option value="">This Page</option>        
+  </select>
+  
+  <div class="pageoptionsbtn button">
+    <span class="btnBlueSmLeft"></span>
+    <span class="btnBlueSmMiddle"><%= link_to 'Print', @page.url+'?print=true', :popup => true %></span>
+    <span class="btnBlueSmSpacer"></span>
+    <span class="btnBlueSmMiddle"><%= link_to 'Email', "/email?u=#{u(@page.url)}" %></span>
+    <span class="btnBlueSmSpacer"></span>
+    <span class="btnBlueSmMiddle">
+			<%# <a href="<%= request.path % >" onclick="addBookmark(this);return false;">Save</a> %>
+			<%= link_to 'Save', @page.url+'?complete=true&print=true&save=true' %>
+		</span>
+    <span class="btnBlueSmRight"></span>
+  </div>  
+</div>
+
+<div>
+  <%= render :partial => "/shared/text_size" %>
+  <%= render :partial => "/shared/search" %>
+</div>
+
+

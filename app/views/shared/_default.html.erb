@@ -1,0 +1,52 @@
+<!-- begin left column -->
+
+<%=
+logger.warn '================='
+logger.warn 'asdf'
+logger.warn '================='
+%>
+
+
+<div class="column wide">
+  <%= render :partial => '/navigation/breadcrumbs' %>
+  <div>
+    <%# render :partial=>'content_blocks/container', :object=>page, :locals=>{:group=>'main'} %>
+  </div>
+</div>
+<!-- end left column -->
+
+<div class="columnspacer"></div>
+<!-- begin right column -->
+<div class="column narrow">
+  <div class="rightitem">
+    <%= render :partial => "/shared/search" %>
+  </div>
+
+  <div class="stripeupbox pageoptionscontainer">
+    <select name="inpPageSelect" id="inpPageSelect">
+      <option value="">This Page</option>        
+    </select>
+    <div class="pageoptionsbtn button">
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><%= link_to 'Print', @page.url+'?complete=true&print=true', :popup => true %></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+      <span class="btnBlueSmMiddle"><%= link_to 'Email', @page.url+'?complete=true&email=true', :popup => true %></span>
+      <span class="btnBlueSmRight"></span>
+      <span class="btnBlueSmLeft"></span>
+	    <span class="btnBlueSmMiddle">
+				<%# <a href="<%= request.path % >" onclick="addBookmark(this);return false;">Save</a> %>
+				<%= link_to 'Save', @page.url+'?complete=true&print=true&save=true' %>
+			</span>
+      <span class="btnBlueSmRight last"></span>
+    </div>  
+  </div>
+
+  <div class="rightitem">
+    <%= render :partial => "/shared/text_size" %>
+  </div>		
+
+  <%= render :partial=>'content_blocks/container', :object=>page, :locals=>{:group=>'sidebar'} %>
+
+</div>
+<!-- end right column -->  

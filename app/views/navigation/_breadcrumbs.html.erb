@@ -1,0 +1,14 @@
+<div class="history">
+<%- begin -%>
+  <%- if @page && @page.show_breadcrumbs -%>
+    <%- home = Page.find_by_path('index') -%>
+    <%= link_to "Home", home.url %>
+    <%- for page in @page.ancestors -%>
+      &raquo; <%= link_to page.link_text.split.map{|item| item.capitalize + " "} , page.url %>
+    <%- end -%>
+    <%- unless @page == home -%>
+      &raquo; <%= link_to @page.link_text.split.map{|item| item.capitalize + " "} , @page.url %>
+    <%- end -%>
+  <%- end -%>
+  <%- rescue;end -%>
+</div>

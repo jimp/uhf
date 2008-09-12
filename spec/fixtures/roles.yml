@@ -1,0 +1,12 @@
+admin:
+  id: 1
+  name: admin
+  position: 1
+user:
+  id: 2
+  name: user
+  position: 2
+moderator:
+  id: 3
+  name: moderator
+  position: 3

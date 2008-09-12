@@ -1,0 +1,69 @@
+<%- content_for :toolbar do -%>
+<%- if defined?(@posts.page_count) -%>
+<%= will_paginate(@posts) %>
+<%- end -%>
+<p><%= link_to 'New post', new_post_path %> | <%= link_to 'Preview Blog', "/blog" %></p>
+<%- end -%>
+
+<%- if @search -%>
+<h2>Blog Posts that match "<%= params[:q] %>"</h2>
+<p><%= link_to '&larr; view all posts', posts_url %></p>
+<%- else -%>
+<h2>Listing Blog Posts</h2>
+<%- end -%>
+
+<%- form_tag search_posts_url, :method=>:get do -%>
+  <fieldset>
+    <legend>Search Posts</legend>
+    <p><%= text_field_tag :q  %> <%= submit_tag 'search' %></p>
+  </fieldset>
+<%- end -%>
+
+<% unless @posts.size==0 %>
+<%= yield :toolbar %>
+<table class="cms">
+  <col style="width:400px;"/>
+  <col style="width:50px;"/>
+  <col/>
+  <col/>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Published</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for post in @posts %>
+    <tr>
+      <td onclick="document.location = '<%= edit_post_path(post) %>'" style="cursor:pointer;">
+        <%= truncate(h(post.title), 70) %>
+      </td>
+      <td onclick="document.location = '<%= edit_post_path(post) %>'" style="cursor:pointer;text-align:center;">
+        <%= image_tag 'icons/tick.png' if post.published_at? %>
+      </td>
+      <td class="link">
+        <%= link_to 'Edit', edit_post_path(post) %>
+      </td>
+      <td class="link">
+        <%= link_to 'Delete', post, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<p>
+  <%- if @search -%>
+  No Search Results Match Your Query: "<%= params[:q] %>"
+  <%- else -%>
+  There are currently no posts in the system.
+  <%- end -%>
+</p>
+<% end %>
+
+<%= yield :toolbar %>
+
+<%- unless @search -%>
+<%- end -%>

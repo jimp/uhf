@@ -1,0 +1,14 @@
+
+<table>
+	<tr>
+		<td>
+<%=
+	if params[:mode] == 'guestbook' 
+		"Your message has been added to the guestbook"
+	else
+		"Thank you for your feedback"
+	end
+%>
+		</td>
+	</tr>
+</table>

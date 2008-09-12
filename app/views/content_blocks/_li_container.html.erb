@@ -1,0 +1,10 @@
+<% if (!admin? &&  defined? stripped ) %>
+  <%= render :partial=>'/content_blocks/li_block', :collection=>container.content_blocks.find_all_by_group(group), :locals=>{:stripped=>'true'} %>
+<% else %>
+    <%= render :partial=>'/content_blocks/li_block', :collection=>li_container.content_blocks.find_all_by_group(group) %>
+    <%- if admin? -%>
+    <p>
+      <%= link_to 'Add new content block', new_content_block_url(li_container.class.name.tableize, li_container.id, group) %>
+    </p>
+    <%- end -%>
+<%- end -%>

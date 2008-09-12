@@ -1,0 +1,74 @@
+<h2><%= @user.name %></h2>
+prefix
+first_name
+last_name
+degrees
+title
+work_phone
+fax_number
+login
+email
+
+<table border="0">
+  <tr>
+    <th>Prefix</th>
+    <td><%= h(@user.prefix) %></td>
+  </tr>
+  <tr>
+    <th>First Name</th>
+    <td><%= h(@user.first_name) %></td>
+  </tr>
+  <tr>
+    <th>Last Name</th>
+    <td><%= h(@user.last_name) %></td>
+  </tr>
+  <tr>
+    <th>Degrees</th>
+    <td><%= h(@user.degrees) %></td>
+  </tr>
+  <tr>
+    <th>Title</th>
+    <td><%= h(@user.title) %></td>
+  </tr>
+  <tr>
+    <th>Work Phone</th>
+    <td><%= h(@user.work_phone) %></td>
+  </tr>
+  <tr>
+    <th>Fax Number</th>
+    <td><%= h(@user.fax_number) %></td>
+  </tr>
+  <tr>
+    <th>Login</th>
+    <td><%= h(@user.login) %></td>
+  </tr>
+  <tr>
+    <th>Email</th>
+    <td><%= h(@user.email) %></td>
+  </tr>
+</table>
+
+<h2>Associated with:</h2>
+<ul>
+  <% for site_user in @user.site_users %>
+  <li><%= link_to "#{site_user.site.name} #{site_user.is_site_coordinator? ? '(coordinator)' : ''}", formatted_site_path(site_user.site, :admin) %></li>
+  <% end %>
+</ul>
+
+<h2>Add user to site</h2>
+
+<% form_for(SiteUser.new(:user_id=>@user.id)) do |f| %>
+<p>
+  <label for="site_user_site_id">Site</label><br/>
+  <%= f.collection_select :site_id, Site.find(:all, :order=>'name'), :id, :name %>
+</p>
+<p>
+  <%= f.check_box :is_site_coordinator %>
+  <label for="site_user_is_site_coordinator">Coordinator?</label>
+</p>
+<p>
+  <%= submit_tag :Submit, :disable_with=>'Submitting...' %>
+  <%= hidden_field_tag :site_or_user, 'user' %>
+  <%= f.hidden_field :user_id %>
+</p>
+<% end %>

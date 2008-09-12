@@ -1,0 +1,13 @@
+<%- 
+  @title="Events"
+-%>
+
+<h2>Upcoming Events</h2>
+<%- for event in @events -%>
+  <div class="vevent">
+    <h3 class="summary"><%= event.name %>:</h3> 
+    <abbr class="dtstart" title="<%= event.start_date.to_s(:db) %>"><%= event.start_date.to_s(:app_long) %></abbr>-
+    <abbr class="dtend" title="<%= event.end_date.to_s(:db) %>"><%= event.end_date.to_s(:app_long) %></abbr>
+    <p class="location"><%= event.location('<br/>','<address>','</address>') %></p>
+   </div>
+<%- end -%>

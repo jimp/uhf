@@ -1,0 +1,49 @@
+<%- url_to_email = "http://#{request.host_with_port}#{params[:u]}" -%>
+<!-- begin left column -->
+<div class="column wide">
+  <div>
+    
+    <%= error_messages_for :message %>
+    
+    <form action="/email?u=<%= u(params[:u]) %>" method="post">
+      <fieldset>
+        <legend>Email this page</legend>
+        <p>You have chosen to email the following link:</p>
+
+        <p><%= link_to truncate(url_to_email,70), url_to_email %></p>
+
+        <p>
+          <label for="to">Enter the recipient's email (separate multiple emails with a comma)</label><br/>
+          <%= text_field :message, :recipients %>
+        </p>
+        <p>
+          <label for="from">Enter Your Name</label><br/>
+          <%= text_field :message, :from %>
+        </p>
+
+        <p>
+          <%= text_area :message, :body %>
+        </p>
+        <p>
+          <%= submit_tag "Submit" %>
+        </p>
+      </fieldset>
+
+    </form>
+  </div>
+</div>
+<!-- end left column -->
+
+<div class="columnspacer"></div>
+<!-- begin right column -->
+<div class="column narrow">
+  <div class="rightitem">
+    <%= render :partial => "/shared/search" %>
+  </div>
+
+  <div class="rightitem">
+    <%= render :partial => "/shared/text_size" %>
+  </div>		
+
+</div>
+<!-- end right column -->  
